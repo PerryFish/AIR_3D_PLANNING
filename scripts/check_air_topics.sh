@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$REPO_ROOT"
 source /opt/ros/humble/setup.bash
-source /home/nuaa/ZHY/TARE_V2_AIR/install/setup.bash
+source install/setup.bash
 
 ros2 node list
 ros2 topic list

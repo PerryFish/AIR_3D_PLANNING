@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-cd /home/nuaa/ZHY/TARE_V2_AIR
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$REPO_ROOT"
 source /opt/ros/humble/setup.bash
 source install/setup.bash
 
-LOG_FILE=/home/nuaa/ZHY/TARE_V2_AIR/uav_motion_check_log.txt
+LOG_FILE="$REPO_ROOT/uav_motion_check_log.txt"
 RAW_FILE=/tmp/tare_v2_air_uav_motion_raw.txt
 
 rm -f "$RAW_FILE"

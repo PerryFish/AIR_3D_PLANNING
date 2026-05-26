@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-cd /home/nuaa/ZHY/TARE_V2_AIR
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$REPO_ROOT"
 source /opt/ros/humble/setup.bash
 source install/setup.bash
 mkdir -p log
