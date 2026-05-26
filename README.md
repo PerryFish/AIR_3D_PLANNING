@@ -93,6 +93,49 @@ y = 7.0
 z = 5.0
 ```
 
+## 50% 障碍物占据率空中规划测试
+
+Dense50 测试用于验证高占据率 3D voxel 场景下的空中规划能力。核心指标包括 `/air/world_status` 中的实际占据率、`/air/planner_status` 中的规划状态，以及 `/air/planning_metrics` 中的规划时间、扩展节点数、路径长度和 z 范围。
+
+启动 dense50 RViz demo：
+
+```bash
+./scripts/launch_dense50_demo.sh
+```
+
+检查 dense50 状态：
+
+```bash
+./scripts/check_dense50_status.sh
+```
+
+运行多 seed benchmark：
+
+```bash
+./scripts/run_dense50_benchmark.sh
+```
+
+benchmark 输出：
+
+- `benchmark_results/dense50_benchmark.csv`
+- `benchmark_results/dense50_benchmark_report.md`
+
+判断成功的依据：
+
+- `/air/world_status` 显示 `actual_occupancy_ratio` 接近 `0.50`
+- `/air/planner_status` 显示 `PLAN_SUCCESS`
+- `/air/planning_metrics` 包含 `planning_time_sec`、`expanded_nodes`、`path_length_m`
+- UAV 能沿路径运动并接近 goal
+- RViz 中可见 dense 3D obstacle field、global path、smoothed path 和 UAV trail
+
+常见失败原因：
+
+- 50% 随机地图本身不连通
+- `inflation_radius` 太大导致通道被膨胀封闭
+- `resolution` 太小导致搜索慢
+- `max_planning_time` 太短
+- `heuristic_weight` 太小导致扩展节点过多
+
 ## Main ROS2 Packages
 
 - `air_planning_msgs`
@@ -113,6 +156,8 @@ air_mission_manager
 air_world_provider
   -> /air/occupancy_markers
   -> /air/visualization/markers
+  -> /air/world_status
+  -> /air/world_status_marker
 
 air_global_planner
   <- /air/start
@@ -120,6 +165,7 @@ air_global_planner
   <- /air/occupancy_markers
   -> /air/global_path
   -> /air/planner_status
+  -> /air/planning_metrics
 
 air_trajectory_generator
   <- /air/global_path
@@ -144,6 +190,9 @@ air_uav_simulator
 - `/air/smoothed_path`
 - `/air/state_estimation`
 - `/air/planner_status`
+- `/air/planning_metrics`
+- `/air/world_status`
+- `/air/world_status_marker`
 - `/air/uav_marker`
 - `/air/uav_trail`
 - `/air/current_waypoint_marker`

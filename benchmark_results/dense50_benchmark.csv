@@ -1,0 +1,11 @@
+seed,occupancy_ratio,success,failure_reason,planning_time_sec,expanded_nodes,path_waypoints,path_length_m,z_min,z_max,reached_goal,total_runtime_sec
+1,0.50,true,none,0.004,32,16,23.740,1.000,4.500,true,21
+2,0.50,true,none,0.006,32,16,23.740,1.000,4.500,true,21
+3,0.50,true,none,0.006,32,16,23.740,1.000,4.500,true,21
+4,0.50,true,none,0.006,32,16,23.740,1.000,4.500,true,21
+5,0.50,true,none,0.005,32,16,23.740,1.000,4.500,true,21
+6,0.50,true,none,0.006,32,16,23.740,1.000,4.500,true,21
+7,0.50,true,none,0.004,32,16,23.740,1.000,4.500,true,21
+8,0.50,true,none,0.006,32,16,23.740,1.000,4.500,true,21
+9,0.50,true,none,0.004,32,16,23.740,1.000,4.500,true,21
+10,0.50,true,none,0.006,32,16,23.740,1.000,4.500,true,21
