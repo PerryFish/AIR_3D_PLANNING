@@ -6,6 +6,7 @@ import rclpy
 from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Path
 from rclpy.node import Node
+from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile
 from std_msgs.msg import String
 from visualization_msgs.msg import Marker, MarkerArray
 
@@ -20,13 +21,25 @@ class AStar3DPlanner(Node):
         self.occupied = set()
         self.grid_dims = self._grid_dims()
         self.neighbors = self._neighbor_offsets()
+        self.last_planned_start = None
+        self.last_planned_goal = None
+        self.last_plan_time = self.get_clock().now()
+        self.pending_replan_reason = None
+        self.last_status = None
 
-        self.path_pub = self.create_publisher(Path, "/air/global_path", 10)
-        self.status_pub = self.create_publisher(String, "/air/planner_status", 10)
+        latched_qos = QoSProfile(
+            depth=1,
+            history=HistoryPolicy.KEEP_LAST,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        )
+        self.path_pub = self.create_publisher(Path, "/air/global_path", latched_qos)
+        self.status_pub = self.create_publisher(String, "/air/planner_status", latched_qos)
         self.marker_pub = self.create_publisher(MarkerArray, "/air/visualization/markers", 10)
         self.start_sub = self.create_subscription(PoseStamped, "/air/start", self.start_cb, 10)
         self.goal_sub = self.create_subscription(PoseStamped, "/air/goal", self.goal_cb, 10)
         self.obs_sub = self.create_subscription(MarkerArray, "/air/occupancy_markers", self.obstacles_cb, 10)
+        self.periodic_timer = self.create_timer(0.5, self.periodic_replan_check)
+        self.status_timer = self.create_timer(1.0, self.republish_status)
         self.get_logger().info("3D A* planner ready.")
 
     def _declare_parameters(self):
@@ -41,6 +54,10 @@ class AStar3DPlanner(Node):
             "map.inflation_radius": 0.5,
             "planner.heuristic_weight": 1.0,
             "planner.allow_diagonal": True,
+            "planner.allow_periodic_replan": False,
+            "planner.replan_period": 5.0,
+            "planner.goal_duplicate_threshold": 0.05,
+            "planner.start_duplicate_threshold": 0.05,
         }
         for name, value in defaults.items():
             self.declare_parameter(name, value)
@@ -54,6 +71,10 @@ class AStar3DPlanner(Node):
         self.inflation_radius = self.get_parameter("map.inflation_radius").value
         self.heuristic_weight = self.get_parameter("planner.heuristic_weight").value
         self.allow_diagonal = self.get_parameter("planner.allow_diagonal").value
+        self.allow_periodic_replan = self.get_parameter("planner.allow_periodic_replan").value
+        self.replan_period = self.get_parameter("planner.replan_period").value
+        self.goal_duplicate_threshold = self.get_parameter("planner.goal_duplicate_threshold").value
+        self.start_duplicate_threshold = self.get_parameter("planner.start_duplicate_threshold").value
 
     def _grid_dims(self):
         return (
@@ -73,12 +94,23 @@ class AStar3DPlanner(Node):
         return offsets
 
     def start_cb(self, msg):
+        new_start = self._pose_xyz(msg)
+        if self.start is not None and self._distance_xyz(new_start, self._pose_xyz(self.start)) < self.start_duplicate_threshold:
+            if self.goal is not None and self.last_planned_goal == self._rounded_xyz(self._pose_xyz(self.goal)):
+                self.publish_status("REPLAN_SKIPPED_NO_CHANGE: duplicate start and unchanged goal")
+                return
         self.start = msg
-        self.plan_if_ready()
+        self.pending_replan_reason = "new_start"
+        self.plan_if_ready(force=True)
 
     def goal_cb(self, msg):
+        new_goal = self._pose_xyz(msg)
+        if self.goal is not None and self._distance_xyz(new_goal, self._pose_xyz(self.goal)) < self.goal_duplicate_threshold:
+            self.publish_status("REPLAN_SKIPPED_DUPLICATE_GOAL: goal change below threshold")
+            return
         self.goal = msg
-        self.plan_if_ready()
+        self.pending_replan_reason = "new_goal"
+        self.plan_if_ready(force=True)
 
     def obstacles_cb(self, msg):
         boxes = []
@@ -90,7 +122,17 @@ class AStar3DPlanner(Node):
             boxes.append(marker)
         self.obstacle_boxes = boxes
         self.occupied = self._build_occupied_grid(boxes)
-        self.plan_if_ready()
+        if self.last_planned_start is None or self.last_planned_goal is None:
+            self.pending_replan_reason = "initial_map"
+            self.plan_if_ready(force=True)
+
+    def periodic_replan_check(self):
+        if not self.allow_periodic_replan:
+            return
+        elapsed = (self.get_clock().now() - self.last_plan_time).nanoseconds * 1e-9
+        if elapsed >= self.replan_period:
+            self.pending_replan_reason = "periodic"
+            self.plan_if_ready(force=True)
 
     def _build_occupied_grid(self, boxes):
         occupied = set()
@@ -135,33 +177,46 @@ class AStar3DPlanner(Node):
     def distance(self, a, b):
         return self.resolution * math.sqrt(sum((a[i] - b[i]) ** 2 for i in range(3)))
 
-    def plan_if_ready(self):
+    def plan_if_ready(self, force=False):
         if self.start is None or self.goal is None or not self.obstacle_boxes:
+            return
+        start_xyz = self._rounded_xyz(self._pose_xyz(self.start))
+        goal_xyz = self._rounded_xyz(self._pose_xyz(self.goal))
+        if not force and start_xyz == self.last_planned_start and goal_xyz == self.last_planned_goal:
+            self.publish_status("REPLAN_SKIPPED_NO_CHANGE: start/goal unchanged")
+            return
+        if force and start_xyz == self.last_planned_start and goal_xyz == self.last_planned_goal:
+            self.publish_status("REPLAN_SKIPPED_NO_CHANGE: start/goal unchanged")
             return
         start_idx = self.world_to_grid(self._pose_xyz(self.start), clamp=False)
         goal_idx = self.world_to_grid(self._pose_xyz(self.goal), clamp=False)
         if not self.in_bounds(start_idx):
-            self.publish_status(f"ERROR: start out of bounds {start_idx}")
+            self.publish_status(f"PLAN_FAILED: start out of bounds {start_idx}")
             return
         if not self.in_bounds(goal_idx):
-            self.publish_status(f"ERROR: goal out of bounds {goal_idx}")
+            self.publish_status(f"PLAN_FAILED: goal out of bounds {goal_idx}")
             return
         if start_idx in self.occupied:
-            self.publish_status("ERROR: start is inside inflated obstacle")
+            self.publish_status("PLAN_FAILED: start is inside inflated obstacle")
             return
         if goal_idx in self.occupied:
-            self.publish_status("ERROR: goal is inside inflated obstacle")
+            self.publish_status("PLAN_FAILED: goal is inside inflated obstacle")
             return
 
         path_idx = self.astar(start_idx, goal_idx)
         if not path_idx:
-            self.publish_status("ERROR: 3D A* failed to find a collision-free path")
+            self.publish_status("PLAN_FAILED: 3D A* failed to find a collision-free path")
             return
         path_idx = self._simplify_collinear(path_idx)
         path = self._to_path(path_idx)
         self.path_pub.publish(path)
+        self.last_planned_start = start_xyz
+        self.last_planned_goal = goal_xyz
+        self.last_plan_time = self.get_clock().now()
+        reason = self.pending_replan_reason or "requested"
+        self.pending_replan_reason = None
         self.publish_status(
-            f"OK: 3D A* path generated with {len(path.poses)} waypoints, z range "
+            f"PLAN_SUCCESS: reason={reason}, 3D A* path generated with {len(path.poses)} waypoints, z range "
             f"{min(p.pose.position.z for p in path.poses):.2f}-{max(p.pose.position.z for p in path.poses):.2f} m"
         )
 
@@ -224,15 +279,28 @@ class AStar3DPlanner(Node):
     def _pose_xyz(self, msg):
         return (msg.pose.position.x, msg.pose.position.y, msg.pose.position.z)
 
+    def _rounded_xyz(self, xyz):
+        return tuple(round(v, 3) for v in xyz)
+
+    def _distance_xyz(self, a, b):
+        return math.sqrt(sum((a[i] - b[i]) ** 2 for i in range(3)))
+
     def publish_status(self, text):
         status = String()
         status.data = text
+        self.last_status = status
         self.status_pub.publish(status)
         self._publish_status_marker(text)
-        if text.startswith("ERROR"):
+        if text.startswith("PLAN_FAILED"):
             self.get_logger().error(text)
-        else:
+        elif text.startswith("PLAN_SUCCESS"):
             self.get_logger().info(text)
+        else:
+            self.get_logger().debug(text)
+
+    def republish_status(self):
+        if self.last_status is not None:
+            self.status_pub.publish(self.last_status)
 
     def _publish_status_marker(self, text):
         marker = Marker()
@@ -248,7 +316,7 @@ class AStar3DPlanner(Node):
         marker.pose.orientation.w = 1.0
         marker.scale.z = 0.35
         marker.color.r = 0.1
-        marker.color.g = 0.9 if text.startswith("OK") else 0.2
+        marker.color.g = 0.9 if text.startswith("PLAN_SUCCESS") else 0.2
         marker.color.b = 0.2
         marker.color.a = 1.0
         marker.text = text
@@ -262,9 +330,15 @@ def main(args=None):
     node = AStar3DPlanner()
     try:
         rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
     finally:
-        node.destroy_node()
-        rclpy.shutdown()
+        try:
+            node.destroy_node()
+        except KeyboardInterrupt:
+            pass
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == "__main__":

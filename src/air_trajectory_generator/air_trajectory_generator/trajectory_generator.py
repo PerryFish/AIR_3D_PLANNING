@@ -4,6 +4,7 @@ import rclpy
 from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Path
 from rclpy.node import Node
+from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile
 from visualization_msgs.msg import Marker, MarkerArray
 
 
@@ -12,22 +13,42 @@ class TrajectoryGenerator(Node):
         super().__init__("air_trajectory_generator")
         self.declare_parameter("sample_spacing", 0.5)
         self.sample_spacing = self.get_parameter("sample_spacing").value
-        self.path_pub = self.create_publisher(Path, "/air/smoothed_path", 10)
-        self.traj_pub = self.create_publisher(Path, "/air/trajectory", 10)
+        latched_qos = QoSProfile(
+            depth=1,
+            history=HistoryPolicy.KEEP_LAST,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        )
+        self.path_pub = self.create_publisher(Path, "/air/smoothed_path", latched_qos)
+        self.traj_pub = self.create_publisher(Path, "/air/trajectory", latched_qos)
         self.marker_pub = self.create_publisher(MarkerArray, "/air/visualization/markers", 10)
         self.sub = self.create_subscription(Path, "/air/global_path", self.path_cb, 10)
+        self.last_signature = None
         self.get_logger().info("3D trajectory generator ready.")
 
     def path_cb(self, msg):
         if not msg.poses:
             self.get_logger().warning("Received empty global path; ignoring.")
             return
+        signature = self._path_signature(msg)
+        if signature == self.last_signature:
+            self.get_logger().info("Skipped duplicate global path, keep current trajectory")
+            return
         simplified = self._line_simplify(msg.poses)
         sampled = self._sample_path(simplified, msg.header)
         self.path_pub.publish(sampled)
         self.traj_pub.publish(sampled)
         self._publish_current_waypoint(sampled)
-        self.get_logger().info(f"Published smoothed 3D path with {len(sampled.poses)} sampled waypoints.")
+        self.last_signature = signature
+        self.get_logger().info(f"Published new smoothed 3D path with {len(sampled.poses)} sampled waypoints.")
+
+    def _path_signature(self, msg):
+        poses = msg.poses
+        sample_indices = sorted(set([0, len(poses) // 4, len(poses) // 2, (len(poses) * 3) // 4, len(poses) - 1]))
+        signature = [len(poses)]
+        for i in sample_indices:
+            p = poses[i].pose.position
+            signature.append((round(p.x, 2), round(p.y, 2), round(p.z, 2)))
+        return tuple(signature)
 
     def _line_simplify(self, poses):
         # Keep direction changes from A* while preserving all 3D coordinates.
@@ -103,9 +124,15 @@ def main(args=None):
     node = TrajectoryGenerator()
     try:
         rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
     finally:
-        node.destroy_node()
-        rclpy.shutdown()
+        try:
+            node.destroy_node()
+        except KeyboardInterrupt:
+            pass
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == "__main__":

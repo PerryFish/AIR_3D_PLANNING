@@ -12,8 +12,9 @@ class MissionManager(Node):
         self.goal_pub = self.create_publisher(PoseStamped, "/air/goal", 10)
         self.marker_pub = self.create_publisher(MarkerArray, "/air/visualization/markers", 10)
         self.goal_sub = self.create_subscription(PoseStamped, "/air/goal", self.external_goal_cb, 10)
-        self.timer = self.create_timer(1.0, self.publish_mission)
-        self.publish_count = 0
+        self.timer = self.create_timer(1.0, self.publish_initial_mission_once)
+        self.published_initial_goal = False
+        self.goal_duplicate_threshold = 0.05
         self.get_logger().info("Mission manager ready.")
 
     def _declare_parameters(self):
@@ -37,17 +38,25 @@ class MissionManager(Node):
         self.auto_start = self.get_parameter("mission.auto_start").value
 
     def external_goal_cb(self, msg):
-        self.goal_xyz = (msg.pose.position.x, msg.pose.position.y, msg.pose.position.z)
+        new_goal = (msg.pose.position.x, msg.pose.position.y, msg.pose.position.z)
+        if self._distance(new_goal, self.goal_xyz) < self.goal_duplicate_threshold:
+            return
+        self.goal_xyz = new_goal
+        self._publish_markers(self._pose(self.start_xyz), self._pose(self.goal_xyz))
+        self.get_logger().info("Received external goal, requesting replan")
 
-    def publish_mission(self):
-        if not self.auto_start or self.publish_count >= 5:
+    def publish_initial_mission_once(self):
+        if not self.auto_start or self.published_initial_goal:
+            self.timer.cancel()
             return
         start = self._pose(self.start_xyz)
         goal = self._pose(self.goal_xyz)
         self.start_pub.publish(start)
         self.goal_pub.publish(goal)
         self._publish_markers(start, goal)
-        self.publish_count += 1
+        self.published_initial_goal = True
+        self.get_logger().info("Published initial 3D mission goal once")
+        self.timer.cancel()
 
     def _pose(self, xyz):
         msg = PoseStamped()
@@ -82,15 +91,24 @@ class MissionManager(Node):
         marker.color.a = color[3]
         return marker
 
+    def _distance(self, a, b):
+        return sum((a[i] - b[i]) ** 2 for i in range(3)) ** 0.5
+
 
 def main(args=None):
     rclpy.init(args=args)
     node = MissionManager()
     try:
         rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
     finally:
-        node.destroy_node()
-        rclpy.shutdown()
+        try:
+            node.destroy_node()
+        except KeyboardInterrupt:
+            pass
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == "__main__":

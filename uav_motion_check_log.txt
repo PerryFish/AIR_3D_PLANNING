@@ -1,0 +1,7 @@
+Collecting /air/state_estimation for 10 seconds...
+samples: 181
+start: x=6.545, y=7.395, z=4.500
+end:   x=7.828, y=7.867, z=4.130
+dx=1.283, dy=0.471, dz=-0.370, total_distance=1.416
+PASS: UAV is moving
+PASS: UAV z is changing

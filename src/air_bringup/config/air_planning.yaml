@@ -13,6 +13,10 @@
       algorithm: astar_3d
       allow_diagonal: true
       heuristic_weight: 1.0
+      allow_periodic_replan: false
+      replan_period: 5.0
+      goal_duplicate_threshold: 0.05
+      start_duplicate_threshold: 0.05
     uav:
       max_speed: 1.0
       goal_tolerance: 0.3

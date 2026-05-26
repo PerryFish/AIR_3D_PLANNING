@@ -67,6 +67,9 @@ Important topics:
 - `/air/state_estimation`
 - `/air/planner_status`
 - `/air/uav_marker`
+- `/air/uav_trail`
+- `/air/current_waypoint_marker`
+- `/air/uav_status_marker`
 - `/air/visualization/markers`
 
 ## Send A New 3D Goal
@@ -76,6 +79,32 @@ Important topics:
 ```
 
 The example goal is `x=-6.0, y=7.0, z=5.0`.
+
+## UAV Looks Stationary
+
+If RViz shows the path but the UAV looks stationary:
+
+1. Check state output:
+
+```bash
+ros2 topic echo /air/state_estimation
+```
+
+2. Run the motion checker while the demo is already running:
+
+```bash
+./scripts/check_uav_motion.sh
+```
+
+3. Check whether the simulator log repeatedly prints `UAV accepted 3D trajectory`. Repeated acceptance of the same path means trajectory execution is being reset.
+
+4. Confirm RViz displays `/air/uav_trail`; this orange path shows the actual flown trajectory.
+
+5. Check `uav.max_speed` in `src/air_bringup/config/air_planning.yaml`; too small a value makes motion hard to see.
+
+6. Check `uav.goal_tolerance`; too large a value can skip nearby waypoints too aggressively.
+
+7. Check whether some node is continuously publishing the same `/air/goal` or `/air/start`, which can force repeated replanning.
 
 ## Current Support
 
