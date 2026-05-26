@@ -42,6 +42,11 @@ Visualization Manager:
       Enabled: true
       Topic:
         Value: /air/uav_status_marker
+    - Class: rviz_default_plugins/Marker
+      Name: World Status Marker
+      Enabled: true
+      Topic:
+        Value: /air/world_status_marker
     - Class: rviz_default_plugins/Path
       Name: Global Path
       Enabled: true

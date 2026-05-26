@@ -1,5 +1,7 @@
 import heapq
 import math
+import re
+import time
 from itertools import product
 
 import rclpy
@@ -26,6 +28,8 @@ class AStar3DPlanner(Node):
         self.last_plan_time = self.get_clock().now()
         self.pending_replan_reason = None
         self.last_status = None
+        self.last_metrics = None
+        self.world_occupancy_ratio = 0.0
 
         latched_qos = QoSProfile(
             depth=1,
@@ -34,10 +38,12 @@ class AStar3DPlanner(Node):
         )
         self.path_pub = self.create_publisher(Path, "/air/global_path", latched_qos)
         self.status_pub = self.create_publisher(String, "/air/planner_status", latched_qos)
+        self.metrics_pub = self.create_publisher(String, "/air/planning_metrics", latched_qos)
         self.marker_pub = self.create_publisher(MarkerArray, "/air/visualization/markers", 10)
         self.start_sub = self.create_subscription(PoseStamped, "/air/start", self.start_cb, 10)
         self.goal_sub = self.create_subscription(PoseStamped, "/air/goal", self.goal_cb, 10)
         self.obs_sub = self.create_subscription(MarkerArray, "/air/occupancy_markers", self.obstacles_cb, 10)
+        self.world_status_sub = self.create_subscription(String, "/air/world_status", self.world_status_cb, 10)
         self.periodic_timer = self.create_timer(0.5, self.periodic_replan_check)
         self.status_timer = self.create_timer(1.0, self.republish_status)
         self.get_logger().info("3D A* planner ready.")
@@ -52,8 +58,11 @@ class AStar3DPlanner(Node):
             "map.z_max": 6.0,
             "map.resolution": 0.5,
             "map.inflation_radius": 0.5,
+            "planner.algorithm": "astar_3d",
             "planner.heuristic_weight": 1.0,
             "planner.allow_diagonal": True,
+            "planner.max_planning_time": 5.0,
+            "planner.max_expanded_nodes": 200000,
             "planner.allow_periodic_replan": False,
             "planner.replan_period": 5.0,
             "planner.goal_duplicate_threshold": 0.05,
@@ -69,8 +78,11 @@ class AStar3DPlanner(Node):
         self.z_max = self.get_parameter("map.z_max").value
         self.resolution = self.get_parameter("map.resolution").value
         self.inflation_radius = self.get_parameter("map.inflation_radius").value
+        self.algorithm = self.get_parameter("planner.algorithm").value
         self.heuristic_weight = self.get_parameter("planner.heuristic_weight").value
         self.allow_diagonal = self.get_parameter("planner.allow_diagonal").value
+        self.max_planning_time = self.get_parameter("planner.max_planning_time").value
+        self.max_expanded_nodes = self.get_parameter("planner.max_expanded_nodes").value
         self.allow_periodic_replan = self.get_parameter("planner.allow_periodic_replan").value
         self.replan_period = self.get_parameter("planner.replan_period").value
         self.goal_duplicate_threshold = self.get_parameter("planner.goal_duplicate_threshold").value
@@ -115,11 +127,15 @@ class AStar3DPlanner(Node):
     def obstacles_cb(self, msg):
         boxes = []
         for marker in msg.markers:
-            if marker.type != Marker.CUBE or marker.ns != "air_world_obstacles":
+            if marker.ns != "air_world_obstacles":
                 continue
-            if marker.id == 0 or marker.pose.position.x > 50.0:
+            if marker.type == Marker.CUBE and (marker.id == 0 or marker.pose.position.x > 50.0):
                 continue
-            boxes.append(marker)
+            if marker.type in (Marker.CUBE, Marker.CUBE_LIST):
+                boxes.append(marker)
+            if marker.type == Marker.CUBE_LIST and marker.points:
+                total_cells = self.grid_dims[0] * self.grid_dims[1] * self.grid_dims[2]
+                self.world_occupancy_ratio = len(marker.points) / total_cells if total_cells else 0.0
         self.obstacle_boxes = boxes
         self.occupied = self._build_occupied_grid(boxes)
         if self.last_planned_start is None or self.last_planned_goal is None:
@@ -137,6 +153,17 @@ class AStar3DPlanner(Node):
     def _build_occupied_grid(self, boxes):
         occupied = set()
         for marker in boxes:
+            if marker.type == Marker.CUBE_LIST:
+                inflation_cells = int(math.ceil(self.inflation_radius / self.resolution))
+                for point in marker.points:
+                    center = self.world_to_grid((point.x, point.y, point.z), clamp=True)
+                    for ix in range(center[0] - inflation_cells, center[0] + inflation_cells + 1):
+                        for iy in range(center[1] - inflation_cells, center[1] + inflation_cells + 1):
+                            for iz in range(center[2] - inflation_cells, center[2] + inflation_cells + 1):
+                                idx = (ix, iy, iz)
+                                if self.in_bounds(idx) and self.distance(center, idx) <= self.inflation_radius + self.resolution * 0.5:
+                                    occupied.add(idx)
+                continue
             cx = marker.pose.position.x
             cy = marker.pose.position.y
             cz = marker.pose.position.z
@@ -172,7 +199,11 @@ class AStar3DPlanner(Node):
         return all(0 <= idx[i] < self.grid_dims[i] for i in range(3))
 
     def heuristic(self, a, b):
-        return self.heuristic_weight * self.distance(a, b)
+        return self.distance(a, b)
+
+    def weighted_heuristic(self, a, b):
+        weight = self.heuristic_weight if self.algorithm == "weighted_astar_3d" else 1.0
+        return weight * self.heuristic(a, b)
 
     def distance(self, a, b):
         return self.resolution * math.sqrt(sum((a[i] - b[i]) ** 2 for i in range(3)))
@@ -190,22 +221,23 @@ class AStar3DPlanner(Node):
             return
         start_idx = self.world_to_grid(self._pose_xyz(self.start), clamp=False)
         goal_idx = self.world_to_grid(self._pose_xyz(self.goal), clamp=False)
+        start_time = time.monotonic()
         if not self.in_bounds(start_idx):
-            self.publish_status(f"PLAN_FAILED: start out of bounds {start_idx}")
+            self.publish_plan_result(False, "PLAN_FAILED_START_OUT_OF_BOUNDS", start_time, 0, [], start_idx, goal_idx)
             return
         if not self.in_bounds(goal_idx):
-            self.publish_status(f"PLAN_FAILED: goal out of bounds {goal_idx}")
+            self.publish_plan_result(False, "PLAN_FAILED_GOAL_OUT_OF_BOUNDS", start_time, 0, [], start_idx, goal_idx)
             return
         if start_idx in self.occupied:
-            self.publish_status("PLAN_FAILED: start is inside inflated obstacle")
+            self.publish_plan_result(False, "PLAN_FAILED_START_IN_OBSTACLE", start_time, 0, [], start_idx, goal_idx)
             return
         if goal_idx in self.occupied:
-            self.publish_status("PLAN_FAILED: goal is inside inflated obstacle")
+            self.publish_plan_result(False, "PLAN_FAILED_GOAL_IN_OBSTACLE", start_time, 0, [], start_idx, goal_idx)
             return
 
-        path_idx = self.astar(start_idx, goal_idx)
+        path_idx, failure_reason, expanded_nodes = self.astar(start_idx, goal_idx, start_time)
         if not path_idx:
-            self.publish_status("PLAN_FAILED: 3D A* failed to find a collision-free path")
+            self.publish_plan_result(False, failure_reason, start_time, expanded_nodes, [], start_idx, goal_idx)
             return
         path_idx = self._simplify_collinear(path_idx)
         path = self._to_path(path_idx)
@@ -215,22 +247,23 @@ class AStar3DPlanner(Node):
         self.last_plan_time = self.get_clock().now()
         reason = self.pending_replan_reason or "requested"
         self.pending_replan_reason = None
-        self.publish_status(
-            f"PLAN_SUCCESS: reason={reason}, 3D A* path generated with {len(path.poses)} waypoints, z range "
-            f"{min(p.pose.position.z for p in path.poses):.2f}-{max(p.pose.position.z for p in path.poses):.2f} m"
-        )
+        self.publish_plan_result(True, "none", start_time, expanded_nodes, path_idx, start_idx, goal_idx, reason)
 
-    def astar(self, start_idx, goal_idx):
-        open_heap = [(self.heuristic(start_idx, goal_idx), 0.0, start_idx)]
+    def astar(self, start_idx, goal_idx, start_time):
+        open_heap = [(self.weighted_heuristic(start_idx, goal_idx), 0.0, start_idx)]
         came_from = {}
         g_score = {start_idx: 0.0}
         closed = set()
         while open_heap:
+            if time.monotonic() - start_time > self.max_planning_time:
+                return [], "PLAN_FAILED_TIMEOUT", len(closed)
+            if len(closed) >= self.max_expanded_nodes:
+                return [], "PLAN_FAILED_MAX_NODES", len(closed)
             _, current_g, current = heapq.heappop(open_heap)
             if current in closed:
                 continue
             if current == goal_idx:
-                return self.reconstruct(came_from, current)
+                return self.reconstruct(came_from, current), "none", len(closed)
             closed.add(current)
             for off in self.neighbors:
                 nb = (current[0] + off[0], current[1] + off[1], current[2] + off[2])
@@ -240,8 +273,8 @@ class AStar3DPlanner(Node):
                 if tentative < g_score.get(nb, float("inf")):
                     came_from[nb] = current
                     g_score[nb] = tentative
-                    heapq.heappush(open_heap, (tentative + self.heuristic(nb, goal_idx), tentative, nb))
-        return []
+                    heapq.heappush(open_heap, (tentative + self.weighted_heuristic(nb, goal_idx), tentative, nb))
+        return [], "PLAN_FAILED_NO_PATH", len(closed)
 
     def reconstruct(self, came_from, current):
         path = [current]
@@ -298,9 +331,53 @@ class AStar3DPlanner(Node):
         else:
             self.get_logger().debug(text)
 
+    def publish_plan_result(self, success, failure_reason, start_time, expanded_nodes, path_idx, start_idx, goal_idx, reason=""):
+        planning_time = time.monotonic() - start_time
+        path_length = self._path_length(path_idx) if path_idx else 0.0
+        z_values = [self.grid_to_world(idx)[2] for idx in path_idx] if path_idx else []
+        z_min = min(z_values) if z_values else 0.0
+        z_max = max(z_values) if z_values else 0.0
+        status_code = "PLAN_SUCCESS" if success else failure_reason
+        status = (
+            f"{status_code} algorithm={self.algorithm} heuristic_weight={self.heuristic_weight:.2f} "
+            f"occupancy={self.world_occupancy_ratio:.2f} time={planning_time:.3f}s expanded={expanded_nodes} "
+            f"waypoints={len(path_idx)} path_length={path_length:.2f} "
+            f"z_range={z_min:.2f}-{z_max:.2f} map_resolution={self.resolution:.2f} "
+            f"inflation_radius={self.inflation_radius:.2f}"
+        )
+        if reason:
+            status += f" reason={reason}"
+        metrics = (
+            f"success={str(success).lower()} failure_reason={failure_reason} algorithm={self.algorithm} "
+            f"occupancy_ratio={self.world_occupancy_ratio:.3f} planning_time_sec={planning_time:.3f} "
+            f"expanded_nodes={expanded_nodes} path_waypoints={len(path_idx)} path_length_m={path_length:.3f} "
+            f"z_min={z_min:.3f} z_max={z_max:.3f} start={self._fmt_idx(start_idx)} goal={self._fmt_idx(goal_idx)} "
+            f"map_resolution={self.resolution:.3f} inflation_radius={self.inflation_radius:.3f} "
+            f"heuristic_weight={self.heuristic_weight:.3f}"
+        )
+        self.publish_status(status)
+        msg = String()
+        msg.data = metrics
+        self.last_metrics = msg
+        self.metrics_pub.publish(msg)
+
+    def _path_length(self, path_idx):
+        return sum(self.distance(a, b) for a, b in zip(path_idx, path_idx[1:]))
+
+    def _fmt_idx(self, idx):
+        xyz = self.grid_to_world(idx)
+        return f"({xyz[0]:.2f},{xyz[1]:.2f},{xyz[2]:.2f})"
+
+    def world_status_cb(self, msg):
+        match = re.search(r"actual_occupancy_ratio=([-+0-9.eE]+)", msg.data)
+        if match:
+            self.world_occupancy_ratio = float(match.group(1))
+
     def republish_status(self):
         if self.last_status is not None:
             self.status_pub.publish(self.last_status)
+        if self.last_metrics is not None:
+            self.metrics_pub.publish(self.last_metrics)
 
     def _publish_status_marker(self, text):
         marker = Marker()
