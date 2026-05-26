@@ -1,132 +1,292 @@
-# TARE_V2_AIR
+# AIR_3D_PLANNING
 
-TARE_V2_AIR is a ROS2 Humble aerial 3D path planning MVP for Ubuntu 22.04. It is an independent workspace under `/home/nuaa/ZHY/TARE_V2_AIR` and does not modify TARE_V1.
+AIR_3D_PLANNING is a ROS2 Humble UAV 3D aerial path planning MVP. It supports 3D A*, 3D obstacle visualization, path smoothing, UAV kinematic simulation, dynamic 3D goal replanning, UAV motion diagnostics, and RViz2 visualization.
 
-## Difference From TARE_V1
+This repository is intentionally lightweight: it does not depend on PX4, Gazebo, MAVROS, OctoMap, or ESDF. The goal is a reproducible ROS2 Humble aerial planning demo that can be cloned, built, and launched quickly.
 
-TARE_V1 ran a TARE-style exploration demo with `vehicle_simulator`, `localPlanner`, `pathFollower`, and fixed-height or ground-like execution assumptions. TARE_V2_AIR implements a 3D aerial planner, 3D obstacle checking, path smoothing, and a simple UAV kinematic simulator that tracks changing z coordinates.
-
-## Architecture
-
-```text
-air_mission_manager -> /air/start, /air/goal
-air_world_provider  -> /air/occupancy_markers, /air/visualization/markers
-air_global_planner  -> /air/global_path, /air/planner_status
-air_trajectory_generator -> /air/smoothed_path, /air/trajectory
-air_uav_simulator   -> /air/state_estimation, /tf, /air/uav_marker
-air_bringup         -> launch, config, RViz
-```
-
-## Dependencies
+## System Requirements
 
 - Ubuntu 22.04
 - ROS2 Humble
-- `python3-colcon-common-extensions`
-- Standard ROS2 message packages: `geometry_msgs`, `nav_msgs`, `std_msgs`, `visualization_msgs`, `tf2_ros`
+- Python 3.10
+- colcon
+- RViz2
+
+## Quick Clone
+
+```bash
+git clone https://github.com/PerryFish/AIR_3D_PLANNING.git
+cd AIR_3D_PLANNING
+```
+
+## Install Dependencies
+
+```bash
+sudo apt update
+sudo apt install -y python3-colcon-common-extensions python3-rosdep
+source /opt/ros/humble/setup.bash
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+If `rosdep` reports that `ament_python` cannot be resolved on your machine, use the provided build script; it skips that non-system rosdep key.
 
 ## Build
 
 ```bash
-cd /home/nuaa/ZHY/TARE_V2_AIR
 ./scripts/build_air.sh
 ```
 
-## Launch Demo
+## Launch RViz Demo
 
 ```bash
-cd /home/nuaa/ZHY/TARE_V2_AIR
 ./scripts/launch_air_demo.sh
 ```
 
-Equivalent command:
+Equivalent manual command:
 
 ```bash
 source /opt/ros/humble/setup.bash
-source /home/nuaa/ZHY/TARE_V2_AIR/install/setup.bash
+source install/setup.bash
 ros2 launch air_bringup air_planning_demo.launch.py
 ```
 
-Headless mode:
+Headless launch without RViz:
 
 ```bash
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 ros2 launch air_bringup air_planning_demo.launch.py rviz:=false
 ```
 
 ## Check Topics
 
+Run this while the demo is active:
+
 ```bash
 ./scripts/check_air_topics.sh
 ```
 
-Important topics:
+## Check UAV Motion
 
-- `/air/occupancy_markers`
+Run this while the demo is active:
+
+```bash
+./scripts/check_uav_motion.sh
+```
+
+The script samples `/air/state_estimation` for 10 seconds and reports total motion and z change.
+
+## Send A New 3D Goal
+
+Run this while the demo is active:
+
+```bash
+./scripts/send_new_goal.sh
+```
+
+The example goal is:
+
+```text
+x = -6.0
+y = 7.0
+z = 5.0
+```
+
+## Main ROS2 Packages
+
+- `air_planning_msgs`
+- `air_world_provider`
+- `air_global_planner`
+- `air_trajectory_generator`
+- `air_uav_simulator`
+- `air_mission_manager`
+- `air_bringup`
+
+## Architecture
+
+```text
+air_mission_manager
+  -> /air/start
+  -> /air/goal
+
+air_world_provider
+  -> /air/occupancy_markers
+  -> /air/visualization/markers
+
+air_global_planner
+  <- /air/start
+  <- /air/goal
+  <- /air/occupancy_markers
+  -> /air/global_path
+  -> /air/planner_status
+
+air_trajectory_generator
+  <- /air/global_path
+  -> /air/smoothed_path
+  -> /air/trajectory
+
+air_uav_simulator
+  <- /air/smoothed_path
+  -> /air/state_estimation
+  -> /air/uav_marker
+  -> /air/uav_trail
+  -> /air/current_waypoint_marker
+  -> /air/uav_status_marker
+  -> /tf
+```
+
+## Main Topics
+
+- `/air/start`
+- `/air/goal`
 - `/air/global_path`
 - `/air/smoothed_path`
-- `/air/trajectory`
 - `/air/state_estimation`
 - `/air/planner_status`
 - `/air/uav_marker`
 - `/air/uav_trail`
 - `/air/current_waypoint_marker`
 - `/air/uav_status_marker`
+- `/air/occupancy_markers`
 - `/air/visualization/markers`
 
-## Send A New 3D Goal
+## Current Support
+
+- 3D A* with 26-connected neighbor expansion.
+- 3D obstacle visualization.
+- Collision checking with obstacle inflation.
+- Path smoothing and sampled waypoint generation.
+- UAV kinematic simulation in x/y/z/yaw.
+- Dynamic goal replanning through `/air/goal`.
+- RViz visualization.
+- UAV trail and status marker visualization.
+- UAV motion diagnostics script.
+
+## Current Limitations
+
+- No real PX4 flight controller.
+- No Gazebo real dynamics.
+- No real sensor-based mapping.
+- No OctoMap or ESDF real-time map.
+- No motor-level control.
+- No physical UAV safety stack.
+
+## Reproducible Demo Workflow
+
+1. Build the workspace:
 
 ```bash
-./scripts/send_new_goal.sh
+./scripts/build_air.sh
 ```
 
-The example goal is `x=-6.0, y=7.0, z=5.0`.
-
-## UAV Looks Stationary
-
-If RViz shows the path but the UAV looks stationary:
-
-1. Check state output:
+2. Launch the demo:
 
 ```bash
-ros2 topic echo /air/state_estimation
+./scripts/launch_air_demo.sh
 ```
 
-2. Run the motion checker while the demo is already running:
+3. In another terminal, verify topics:
+
+```bash
+cd AIR_3D_PLANNING
+./scripts/check_air_topics.sh
+```
+
+4. Verify UAV movement:
 
 ```bash
 ./scripts/check_uav_motion.sh
 ```
 
-3. Check whether the simulator log repeatedly prints `UAV accepted 3D trajectory`. Repeated acceptance of the same path means trajectory execution is being reset.
+5. Send a new 3D goal:
 
-4. Confirm RViz displays `/air/uav_trail`; this orange path shows the actual flown trajectory.
+```bash
+./scripts/send_new_goal.sh
+```
 
-5. Check `uav.max_speed` in `src/air_bringup/config/air_planning.yaml`; too small a value makes motion hard to see.
+6. In RViz, observe the obstacle boxes, global path, smoothed path, UAV marker, and orange `/air/uav_trail`.
 
-6. Check `uav.goal_tolerance`; too large a value can skip nearby waypoints too aggressively.
+## Troubleshooting
 
-7. Check whether some node is continuously publishing the same `/air/goal` or `/air/start`, which can force repeated replanning.
+### `ros2 launch` Cannot Find A Package
 
-## Current Support
+Build and source the workspace:
 
-- 3D A* with 26-connected neighbor expansion.
-- 3D obstacle boxes with inflation.
-- UAV kinematic simulation in x/y/z/yaw.
-- RViz visualization.
-- Path simplification and sampling.
-- Dynamic goal replanning through `/air/goal`.
+```bash
+./scripts/build_air.sh
+source install/setup.bash
+ros2 pkg list | grep air_
+```
 
-## Current Limitations
+### RViz Is Blank
 
-- No real PX4 flight controller.
-- No real UAV dynamics or motor control.
-- No real sensor loop or online mapping.
-- No ESDF, OctoMap, Voxblox, or dynamic map updates.
-- The world model is deterministic box obstacles, not a live perception map.
+Check that the fixed frame is `map`, then verify marker topics:
 
-## Future Extensions
+```bash
+ros2 topic list | grep /air
+ros2 topic echo /air/occupancy_markers --once
+```
 
-- Connect PX4 SITL.
-- Add MAVROS or `px4_ros_com` bridge.
-- Add OctoMap, Voxblox, or ESDF map input.
-- Replace A* with RRT*, kinodynamic A*, or trajectory optimization.
-- Add a dual-mode `mode_manager` for simulation and flight-controller execution.
+### UAV Looks Stationary
+
+Check odometry and motion:
+
+```bash
+ros2 topic echo /air/state_estimation
+./scripts/check_uav_motion.sh
+```
+
+Also check that logs are not repeatedly printing `UAV accepted 3D trajectory`; repeated trajectory acceptance can reset tracking progress. Confirm RViz displays `/air/uav_trail`.
+
+### `/air/state_estimation` Has No Data
+
+Confirm the simulator is running:
+
+```bash
+ros2 node list | grep air_uav_simulator
+ros2 topic hz /air/state_estimation
+```
+
+### `colcon build` Fails
+
+Source ROS2 first and rebuild:
+
+```bash
+source /opt/ros/humble/setup.bash
+./scripts/build_air.sh
+```
+
+### Forgot To Source The Workspace
+
+Run:
+
+```bash
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+```
+
+### Ctrl+C Exit
+
+Use Ctrl+C once in the launch terminal. The Python nodes use guarded shutdown logic to avoid `rcl_shutdown already called` tracebacks.
+
+## Difference From TARE_V1
+
+TARE_V1 used `vehicle_simulator`, `localPlanner`, `pathFollower`, and fixed-height or ground-like execution assumptions. AIR_3D_PLANNING implements a standalone ROS2 Humble 3D aerial planner and simple UAV kinematic simulator. It does not modify TARE_V1.
+
+## Documentation
+
+- `AIR_PLANNING_ARCHITECTURE.md`
+- `DEPLOY_REPORT.md`
+- `PX4_INTEGRATION_PLAN.md`
+- `UAV_MOTION_DEBUG_REPORT.md`
+- `GITHUB_DEPLOYMENT.md`
+
+## Future Roadmap
+
+- dense50 occupancy benchmark.
+- Weighted A*.
+- Bidirectional A*.
+- RRT* fallback.
+- PX4 SITL bridge.
+- Bimodal ground-air mode manager.

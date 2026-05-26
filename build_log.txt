@@ -4,14 +4,13 @@ Starting >>> air_trajectory_generator
 Starting >>> air_uav_simulator
 Starting >>> air_world_provider
 Starting >>> air_planning_msgs
-Finished <<< air_planning_msgs [2.83s]
-Finished <<< air_uav_simulator [3.55s]
-Finished <<< air_global_planner [3.96s]
-Finished <<< air_world_provider [3.37s]
-Finished <<< air_mission_manager [4.26s]
-Finished <<< air_trajectory_generator [4.20s]
+Finished <<< air_planning_msgs [4.23s]
+Finished <<< air_world_provider [4.78s]
+Finished <<< air_global_planner [4.82s]
+Finished <<< air_trajectory_generator [4.84s]
+Finished <<< air_uav_simulator [4.84s]
+Finished <<< air_mission_manager [4.87s]
 Starting >>> air_bringup
-[Processing: air_bringup]
-Finished <<< air_bringup [30.8s]
+Finished <<< air_bringup [0.26s]
 
-Summary: 7 packages finished [35.7s]
+Summary: 7 packages finished [5.48s]

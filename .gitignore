@@ -8,3 +8,9 @@ __pycache__/
 *.mcap
 .vscode/
 .idea/
+*.swp
+*.swo
+.DS_Store
+.cache/
+colcon_build.rc
+*.log
