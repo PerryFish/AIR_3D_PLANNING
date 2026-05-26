@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>air_bringup</name>
+  <version>0.1.0</version>
+  <description>Launch, config, RViz, and scripts for the aerial planning MVP.</description>
+  <maintainer email="nuaa@example.com">nuaa</maintainer>
+  <license>MIT</license>
+  <exec_depend>air_world_provider</exec_depend>
+  <exec_depend>air_global_planner</exec_depend>
+  <exec_depend>air_trajectory_generator</exec_depend>
+  <exec_depend>air_uav_simulator</exec_depend>
+  <exec_depend>air_mission_manager</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

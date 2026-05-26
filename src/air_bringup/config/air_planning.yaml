@@ -1,0 +1,28 @@
+/**:
+  ros__parameters:
+    map:
+      x_min: -10.0
+      x_max: 10.0
+      y_min: -10.0
+      y_max: 10.0
+      z_min: 0.5
+      z_max: 6.0
+      resolution: 0.5
+      inflation_radius: 0.5
+    planner:
+      algorithm: astar_3d
+      allow_diagonal: true
+      heuristic_weight: 1.0
+    uav:
+      max_speed: 1.0
+      goal_tolerance: 0.3
+      initial_x: -8.0
+      initial_y: -8.0
+      initial_z: 1.0
+    mission:
+      goal_x: 8.0
+      goal_y: 8.0
+      goal_z: 4.0
+      auto_start: true
+    sample_spacing: 0.5
+    frame_id: map
