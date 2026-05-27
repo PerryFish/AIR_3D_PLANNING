@@ -8,10 +8,11 @@ done=True is published only after coverage >= 0.93.
 
 Observed final metrics:
 
-- explored_voxels: 2268
-- free_voxels: 1984
-- occupied_voxels: 284
-- unknown_voxels: 132
+- explored_voxels: 2232
+- free_voxels: 1669
+- occupied_voxels: 563
+- unknown_voxels: 168
 - total_voxels: 2400
-- final_coverage: 0.945000
+- final_coverage: 0.930000
 - done: True
+- coverage_source: observed voxels updated from simulated robot odom and sensor range

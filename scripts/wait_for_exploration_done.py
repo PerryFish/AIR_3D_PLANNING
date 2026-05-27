@@ -60,8 +60,12 @@ def write_summary(path, row, passed):
                 f"- failed_goals: {failed_goals}",
                 f"- stuck_events: {stuck_events}",
                 f"- measured_ground_footprint_occupancy_ratio: {ground_ratio}",
+                f"- robot_xyz: ({row.get('robot_x', 'unknown')}, {row.get('robot_y', 'unknown')}, {row.get('robot_z', 'unknown')})",
+                f"- goal_xyz: ({row.get('goal_x', 'unknown')}, {row.get('goal_y', 'unknown')}, {row.get('goal_z', 'unknown')})",
+                f"- newly_observed_voxels: {row.get('newly_observed_voxels', 'unknown')}",
                 "- coverage_rule: done is true only when coverage >= 0.93",
                 "- dense50_definition: XY ground obstacle footprint occupancy ratio, not 3D voxel occupancy",
+                "- limitation: this summary is produced by the ROS2 simulated exploration loop, not by Gazebo physics",
                 "",
             ]
         )

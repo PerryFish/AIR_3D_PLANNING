@@ -1,0 +1,5 @@
+/aerial_exploration_node
+/exploration_metrics_node
+/mode_manager_node
+/simple_uav_follower_node
+/synthetic_mapping_node

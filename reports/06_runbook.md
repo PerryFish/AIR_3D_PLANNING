@@ -12,4 +12,6 @@ set -u
 python3 scripts/validate_dense50_ground_ratio.py --config config/aerial_exploration.yaml
 timeout -s INT -k 10s 180s scripts/run_aerial_exploration_tests.sh
 timeout -s INT -k 10s 120s scripts/run_anti_fake_coverage_tests.sh
+timeout -s INT -k 10s 180s scripts/run_visual_exploration_smoke_test.sh
+ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=true rviz:=true
 ```

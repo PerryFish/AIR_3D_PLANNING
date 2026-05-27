@@ -13,6 +13,7 @@ setup(
         ("share/" + package_name + "/launch", glob("launch/*.launch.py")),
         ("share/" + package_name + "/config", glob("config/*.yaml")),
         ("share/" + package_name + "/rviz", glob("rviz/*.rviz")),
+        ("share/" + package_name + "/worlds", glob("worlds/*.world")),
     ],
     install_requires=["setuptools"],
     zip_safe=True,
@@ -26,6 +27,7 @@ setup(
             "aerial_exploration_node = aerial_exploration_planner.aerial_exploration_node:main",
             "exploration_metrics_node = aerial_exploration_planner.exploration_metrics_node:main",
             "mode_manager_node = aerial_exploration_planner.mode_manager_node:main",
+            "simple_uav_follower_node = aerial_exploration_planner.simple_uav_follower_node:main",
         ],
     },
 )

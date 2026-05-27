@@ -12,9 +12,10 @@ Expected validation:
 Observed validation:
 
 - measured_ground_footprint_occupancy_ratio: 0.500000
-- final_coverage: 0.945000
+- final_coverage: 0.930000
 - done: True
 - failed_goals: 0
 - stuck_events: 0
 - metrics CSV: results/metrics_dense50.csv
 - summary: results/test_summary.md
+- previous fixed-step synthetic coverage behavior has been replaced by odom/sensor-range observed voxel updates

@@ -1,0 +1,2819 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <world name='dense50_ground_footprint'>
+    <plugin name='gazebo_ros_init' filename='libgazebo_ros_init.so'/>
+    <include><uri>model://sun</uri></include>
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>24 24 0.05</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>24 24 0.05</size></box></geometry>
+          <material><ambient>0.35 0.35 0.35 1</ambient><diffuse>0.45 0.45 0.45 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_000'>
+      <static>true</static>
+      <pose>-5.500 -9.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_001'>
+      <static>true</static>
+      <pose>-4.500 -9.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_002'>
+      <static>true</static>
+      <pose>-1.500 -9.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_003'>
+      <static>true</static>
+      <pose>-0.500 -9.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_004'>
+      <static>true</static>
+      <pose>2.500 -9.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_005'>
+      <static>true</static>
+      <pose>3.500 -9.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_006'>
+      <static>true</static>
+      <pose>6.500 -9.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_007'>
+      <static>true</static>
+      <pose>7.500 -9.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_008'>
+      <static>true</static>
+      <pose>-7.500 -8.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_009'>
+      <static>true</static>
+      <pose>-6.500 -8.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_010'>
+      <static>true</static>
+      <pose>-3.500 -8.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_011'>
+      <static>true</static>
+      <pose>-2.500 -8.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_012'>
+      <static>true</static>
+      <pose>0.500 -8.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_013'>
+      <static>true</static>
+      <pose>1.500 -8.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_014'>
+      <static>true</static>
+      <pose>4.500 -8.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_015'>
+      <static>true</static>
+      <pose>5.500 -8.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_016'>
+      <static>true</static>
+      <pose>9.500 -8.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_017'>
+      <static>true</static>
+      <pose>-9.500 -7.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_018'>
+      <static>true</static>
+      <pose>-8.500 -7.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_019'>
+      <static>true</static>
+      <pose>-5.500 -7.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_020'>
+      <static>true</static>
+      <pose>-4.500 -7.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_021'>
+      <static>true</static>
+      <pose>-1.500 -7.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_022'>
+      <static>true</static>
+      <pose>-0.500 -7.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_023'>
+      <static>true</static>
+      <pose>2.500 -7.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_024'>
+      <static>true</static>
+      <pose>3.500 -7.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_025'>
+      <static>true</static>
+      <pose>6.500 -7.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_026'>
+      <static>true</static>
+      <pose>-7.500 -6.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_027'>
+      <static>true</static>
+      <pose>-3.500 -6.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_028'>
+      <static>true</static>
+      <pose>-2.500 -6.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_029'>
+      <static>true</static>
+      <pose>0.500 -6.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_030'>
+      <static>true</static>
+      <pose>1.500 -6.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_031'>
+      <static>true</static>
+      <pose>4.500 -6.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_032'>
+      <static>true</static>
+      <pose>5.500 -6.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_033'>
+      <static>true</static>
+      <pose>8.500 -6.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_034'>
+      <static>true</static>
+      <pose>9.500 -6.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_035'>
+      <static>true</static>
+      <pose>-9.500 -5.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_036'>
+      <static>true</static>
+      <pose>-8.500 -5.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_037'>
+      <static>true</static>
+      <pose>-5.500 -5.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_038'>
+      <static>true</static>
+      <pose>-4.500 -5.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_039'>
+      <static>true</static>
+      <pose>-1.500 -5.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_040'>
+      <static>true</static>
+      <pose>-0.500 -5.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_041'>
+      <static>true</static>
+      <pose>2.500 -5.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_042'>
+      <static>true</static>
+      <pose>3.500 -5.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_043'>
+      <static>true</static>
+      <pose>6.500 -5.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_044'>
+      <static>true</static>
+      <pose>7.500 -5.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_045'>
+      <static>true</static>
+      <pose>-7.500 -4.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_046'>
+      <static>true</static>
+      <pose>-6.500 -4.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_047'>
+      <static>true</static>
+      <pose>-3.500 -4.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_048'>
+      <static>true</static>
+      <pose>-2.500 -4.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_049'>
+      <static>true</static>
+      <pose>0.500 -4.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_050'>
+      <static>true</static>
+      <pose>1.500 -4.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_051'>
+      <static>true</static>
+      <pose>4.500 -4.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_052'>
+      <static>true</static>
+      <pose>5.500 -4.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_053'>
+      <static>true</static>
+      <pose>8.500 -4.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_054'>
+      <static>true</static>
+      <pose>9.500 -4.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_055'>
+      <static>true</static>
+      <pose>-9.500 -3.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_056'>
+      <static>true</static>
+      <pose>-8.500 -3.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_057'>
+      <static>true</static>
+      <pose>-5.500 -3.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_058'>
+      <static>true</static>
+      <pose>-4.500 -3.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_059'>
+      <static>true</static>
+      <pose>-1.500 -3.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_060'>
+      <static>true</static>
+      <pose>-0.500 -3.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_061'>
+      <static>true</static>
+      <pose>2.500 -3.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_062'>
+      <static>true</static>
+      <pose>6.500 -3.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_063'>
+      <static>true</static>
+      <pose>7.500 -3.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_064'>
+      <static>true</static>
+      <pose>-7.500 -2.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_065'>
+      <static>true</static>
+      <pose>-6.500 -2.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_066'>
+      <static>true</static>
+      <pose>-3.500 -2.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_067'>
+      <static>true</static>
+      <pose>0.500 -2.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_068'>
+      <static>true</static>
+      <pose>1.500 -2.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_069'>
+      <static>true</static>
+      <pose>4.500 -2.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_070'>
+      <static>true</static>
+      <pose>5.500 -2.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_071'>
+      <static>true</static>
+      <pose>8.500 -2.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_072'>
+      <static>true</static>
+      <pose>9.500 -2.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_073'>
+      <static>true</static>
+      <pose>-9.500 -1.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_074'>
+      <static>true</static>
+      <pose>-8.500 -1.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_075'>
+      <static>true</static>
+      <pose>-5.500 -1.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_076'>
+      <static>true</static>
+      <pose>-4.500 -1.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_077'>
+      <static>true</static>
+      <pose>-1.500 -1.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 1.450 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 1.450 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_078'>
+      <static>true</static>
+      <pose>-0.500 -1.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_079'>
+      <static>true</static>
+      <pose>2.500 -1.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_080'>
+      <static>true</static>
+      <pose>3.500 -1.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_081'>
+      <static>true</static>
+      <pose>6.500 -1.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_082'>
+      <static>true</static>
+      <pose>7.500 -1.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_083'>
+      <static>true</static>
+      <pose>-7.500 -0.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_084'>
+      <static>true</static>
+      <pose>-6.500 -0.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_085'>
+      <static>true</static>
+      <pose>-3.500 -0.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_086'>
+      <static>true</static>
+      <pose>-2.500 -0.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_087'>
+      <static>true</static>
+      <pose>1.500 -0.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_088'>
+      <static>true</static>
+      <pose>4.500 -0.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_089'>
+      <static>true</static>
+      <pose>5.500 -0.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_090'>
+      <static>true</static>
+      <pose>8.500 -0.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_091'>
+      <static>true</static>
+      <pose>9.500 -0.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_092'>
+      <static>true</static>
+      <pose>-9.500 0.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_093'>
+      <static>true</static>
+      <pose>-8.500 0.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_094'>
+      <static>true</static>
+      <pose>-5.500 0.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_095'>
+      <static>true</static>
+      <pose>-4.500 0.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_096'>
+      <static>true</static>
+      <pose>-1.500 0.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_097'>
+      <static>true</static>
+      <pose>-0.500 0.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_098'>
+      <static>true</static>
+      <pose>2.500 0.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_099'>
+      <static>true</static>
+      <pose>3.500 0.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_100'>
+      <static>true</static>
+      <pose>6.500 0.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_101'>
+      <static>true</static>
+      <pose>7.500 0.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_102'>
+      <static>true</static>
+      <pose>-7.500 1.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_103'>
+      <static>true</static>
+      <pose>-6.500 1.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_104'>
+      <static>true</static>
+      <pose>-3.500 1.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_105'>
+      <static>true</static>
+      <pose>-2.500 1.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_106'>
+      <static>true</static>
+      <pose>0.500 1.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_107'>
+      <static>true</static>
+      <pose>4.500 1.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_108'>
+      <static>true</static>
+      <pose>5.500 1.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_109'>
+      <static>true</static>
+      <pose>8.500 1.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_110'>
+      <static>true</static>
+      <pose>9.500 1.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_111'>
+      <static>true</static>
+      <pose>-9.500 2.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_112'>
+      <static>true</static>
+      <pose>-8.500 2.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_113'>
+      <static>true</static>
+      <pose>-5.500 2.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_114'>
+      <static>true</static>
+      <pose>-4.500 2.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_115'>
+      <static>true</static>
+      <pose>-1.500 2.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_116'>
+      <static>true</static>
+      <pose>-0.500 2.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_117'>
+      <static>true</static>
+      <pose>2.500 2.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_118'>
+      <static>true</static>
+      <pose>3.500 2.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_119'>
+      <static>true</static>
+      <pose>6.500 2.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_120'>
+      <static>true</static>
+      <pose>7.500 2.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_121'>
+      <static>true</static>
+      <pose>-7.500 3.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_122'>
+      <static>true</static>
+      <pose>-6.500 3.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_123'>
+      <static>true</static>
+      <pose>-2.500 3.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_124'>
+      <static>true</static>
+      <pose>0.500 3.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_125'>
+      <static>true</static>
+      <pose>1.500 3.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_126'>
+      <static>true</static>
+      <pose>4.500 3.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_127'>
+      <static>true</static>
+      <pose>5.500 3.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_128'>
+      <static>true</static>
+      <pose>8.500 3.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_129'>
+      <static>true</static>
+      <pose>9.500 3.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_130'>
+      <static>true</static>
+      <pose>-9.500 4.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_131'>
+      <static>true</static>
+      <pose>-8.500 4.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_132'>
+      <static>true</static>
+      <pose>-5.500 4.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_133'>
+      <static>true</static>
+      <pose>-1.500 4.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_134'>
+      <static>true</static>
+      <pose>-0.500 4.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_135'>
+      <static>true</static>
+      <pose>2.500 4.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_136'>
+      <static>true</static>
+      <pose>3.500 4.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_137'>
+      <static>true</static>
+      <pose>6.500 4.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_138'>
+      <static>true</static>
+      <pose>7.500 4.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_139'>
+      <static>true</static>
+      <pose>-7.500 5.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_140'>
+      <static>true</static>
+      <pose>-6.500 5.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_141'>
+      <static>true</static>
+      <pose>-3.500 5.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_142'>
+      <static>true</static>
+      <pose>-2.500 5.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_143'>
+      <static>true</static>
+      <pose>0.500 5.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_144'>
+      <static>true</static>
+      <pose>1.500 5.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_145'>
+      <static>true</static>
+      <pose>4.500 5.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_146'>
+      <static>true</static>
+      <pose>8.500 5.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_147'>
+      <static>true</static>
+      <pose>9.500 5.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_148'>
+      <static>true</static>
+      <pose>-9.500 6.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_149'>
+      <static>true</static>
+      <pose>-8.500 6.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_150'>
+      <static>true</static>
+      <pose>-5.500 6.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_151'>
+      <static>true</static>
+      <pose>-4.500 6.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_152'>
+      <static>true</static>
+      <pose>-1.500 6.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_153'>
+      <static>true</static>
+      <pose>-0.500 6.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_154'>
+      <static>true</static>
+      <pose>2.500 6.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 1.450 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 1.450 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_155'>
+      <static>true</static>
+      <pose>3.500 6.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_156'>
+      <static>true</static>
+      <pose>6.500 6.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_157'>
+      <static>true</static>
+      <pose>7.500 6.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_158'>
+      <static>true</static>
+      <pose>-6.500 7.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_159'>
+      <static>true</static>
+      <pose>-3.500 7.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_160'>
+      <static>true</static>
+      <pose>-2.500 7.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_161'>
+      <static>true</static>
+      <pose>0.500 7.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_162'>
+      <static>true</static>
+      <pose>1.500 7.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_163'>
+      <static>true</static>
+      <pose>4.500 7.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_164'>
+      <static>true</static>
+      <pose>5.500 7.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_165'>
+      <static>true</static>
+      <pose>8.500 7.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_166'>
+      <static>true</static>
+      <pose>9.500 7.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_167'>
+      <static>true</static>
+      <pose>-9.500 8.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_168'>
+      <static>true</static>
+      <pose>-5.500 8.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_169'>
+      <static>true</static>
+      <pose>-4.500 8.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_170'>
+      <static>true</static>
+      <pose>-1.500 8.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_171'>
+      <static>true</static>
+      <pose>-0.500 8.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_172'>
+      <static>true</static>
+      <pose>2.500 8.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_173'>
+      <static>true</static>
+      <pose>3.500 8.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_174'>
+      <static>true</static>
+      <pose>6.500 8.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_175'>
+      <static>true</static>
+      <pose>7.500 8.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_176'>
+      <static>true</static>
+      <pose>-7.500 9.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_177'>
+      <static>true</static>
+      <pose>-6.500 9.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_178'>
+      <static>true</static>
+      <pose>-3.500 9.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_179'>
+      <static>true</static>
+      <pose>-2.500 9.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_180'>
+      <static>true</static>
+      <pose>0.500 9.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_181'>
+      <static>true</static>
+      <pose>1.500 9.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_182'>
+      <static>true</static>
+      <pose>4.500 9.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_183'>
+      <static>true</static>
+      <pose>5.500 9.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_184'>
+      <static>true</static>
+      <pose>-7.500 -9.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_185'>
+      <static>true</static>
+      <pose>-6.500 -9.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_186'>
+      <static>true</static>
+      <pose>-3.500 -9.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_187'>
+      <static>true</static>
+      <pose>-2.500 -9.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_188'>
+      <static>true</static>
+      <pose>0.500 -9.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_189'>
+      <static>true</static>
+      <pose>1.500 -9.500 1.025 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.050</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.050</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_190'>
+      <static>true</static>
+      <pose>4.500 -9.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_191'>
+      <static>true</static>
+      <pose>5.500 -9.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_192'>
+      <static>true</static>
+      <pose>8.500 -9.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_193'>
+      <static>true</static>
+      <pose>9.500 -9.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_194'>
+      <static>true</static>
+      <pose>-5.500 -8.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_195'>
+      <static>true</static>
+      <pose>-4.500 -8.500 0.350 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>2.400 0.350 0.700</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_196'>
+      <static>true</static>
+      <pose>-1.500 -8.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>1.600 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_197'>
+      <static>true</static>
+      <pose>-0.500 -8.500 0.800 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 1.600</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_198'>
+      <static>true</static>
+      <pose>2.500 -8.500 0.575 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 1.450 1.150</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='dense50_obstacle_199'>
+      <static>true</static>
+      <pose>3.500 -8.500 1.250 0 0 0</pose>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><box><size>0.820 0.820 2.500</size></box></geometry>
+          <material><ambient>0.65 0.16 0.08 1</ambient><diffuse>0.85 0.22 0.10 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>

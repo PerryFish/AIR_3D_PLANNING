@@ -10,6 +10,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             Node(package="aerial_exploration_planner", executable="synthetic_mapping_node", name="synthetic_mapping_node", **common),
+            Node(package="aerial_exploration_planner", executable="simple_uav_follower_node", name="simple_uav_follower_node", **common),
             Node(package="aerial_exploration_planner", executable="aerial_exploration_node", name="aerial_exploration_node", **common),
             Node(package="aerial_exploration_planner", executable="exploration_metrics_node", name="exploration_metrics_node", **common),
             Node(package="aerial_exploration_planner", executable="mode_manager_node", name="mode_manager_node", **common),

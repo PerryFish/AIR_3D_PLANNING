@@ -50,3 +50,32 @@ def make_dense50_ground_footprint(spec):
             if len(occupied) >= target:
                 return occupied
     return occupied
+
+
+def ground_to_occupied_voxels(spec, ground_cells):
+    occupied = set()
+    for ix, iy in ground_cells:
+        height = 1 + ((ix * 3 + iy * 5) % max(1, spec.z_cells - 1))
+        for iz in range(min(spec.z_cells, height)):
+            occupied.add((ix, iy, iz))
+    return occupied
+
+
+def grid_to_world(spec, idx):
+    return (
+        (idx[0] - spec.x_cells / 2) * spec.resolution + spec.resolution * 0.5,
+        (idx[1] - spec.y_cells / 2) * spec.resolution + spec.resolution * 0.5,
+        idx[2] * spec.resolution + spec.resolution * 0.5,
+    )
+
+
+def world_to_grid(spec, xyz):
+    return (
+        int(xyz[0] / spec.resolution + spec.x_cells / 2),
+        int(xyz[1] / spec.resolution + spec.y_cells / 2),
+        int(xyz[2] / spec.resolution),
+    )
+
+
+def in_bounds(spec, idx):
+    return 0 <= idx[0] < spec.x_cells and 0 <= idx[1] < spec.y_cells and 0 <= idx[2] < spec.z_cells

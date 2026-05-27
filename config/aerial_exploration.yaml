@@ -7,7 +7,12 @@
     grid.resolution: 1.0
     dense50.ground_footprint_occupancy_ratio: 0.50
     exploration.done_threshold: 0.93
-    exploration.coverage_increment: 0.045
-    exploration.step_period_sec: 0.25
+    exploration.plan_period_sec: 0.5
     mapping.publish_period_sec: 0.25
+    mapping.sensor_range: 4.2
+    uav.initial_x: -9.0
+    uav.initial_y: -9.0
+    uav.initial_z: 1.5
+    uav.max_speed: 3.0
+    uav.goal_tolerance: 0.35
     metrics.csv_path: results/metrics_dense50.csv

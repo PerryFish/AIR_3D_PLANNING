@@ -1,0 +1,74 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Enabled: true
+      Name: Grid
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Name: TF
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: UAV
+      Topic:
+        Value: /aerial_exploration/uav_marker
+    - Class: rviz_default_plugins/Odometry
+      Enabled: true
+      Name: Odometry
+      Topic:
+        Value: /odom
+    - Class: rviz_default_plugins/Path
+      Enabled: true
+      Name: Planned Path
+      Topic:
+        Value: /aerial_exploration/path
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Map Markers
+      Topic:
+        Value: /aerial_exploration/map_markers
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Frontiers
+      Topic:
+        Value: /aerial_exploration/frontiers
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Viewpoints
+      Topic:
+        Value: /aerial_exploration/viewpoints
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Selected Goal
+      Topic:
+        Value: /aerial_exploration/selected_goal_marker
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Coverage Text
+      Topic:
+        Value: /aerial_exploration/coverage_marker
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Ground Footprint Text
+      Topic:
+        Value: /aerial_exploration/ground_footprint_marker
+  Enabled: true
+  Global Options:
+    Fixed Frame: map
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 28
+      Pitch: 0.75
+      Target Frame: map
+      Yaw: 0.75
+Window Geometry:
+  Height: 900
+  Width: 1400
