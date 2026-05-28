@@ -11,16 +11,15 @@
 - a_dwa_model_path_isolated: True
 - gazebo: launched headless with dense50_ground_footprint.world
 - rviz: launch command available; smoke test used rviz:=false for CI stability
-- initial_coverage: 0.043750
-- final_coverage: 0.940000
+- initial_coverage: 0.085000
+- final_coverage: 0.953333
 - done: True
-- unique_pose_samples: 342
-- unique_goal_samples: 114
+- unique_pose_samples: 122
+- unique_goal_samples: 9
+- robot_z_range: 1.400..1.400
+- goal_z_range: 1.400..1.400
+- aerial_corridor_height_valid: True
 - final_failed_goals: 0
 - final_stuck_events: 0
 - coverage_source: observed voxels from simulated odom and sensor range
-- gazebo_pose_source: /state_estimation
-- gazebo_motion_method: /gazebo/set_entity_state
-- gazebo_path_visualization: uav_trail breadcrumb sphere models
-- gazebo_goal_visualization: current_exploration_goal sphere model
 - limitation: Gazebo renders the dense50 world; robot motion is ROS2 kinematic follower, not Gazebo physics control

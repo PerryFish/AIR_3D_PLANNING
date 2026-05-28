@@ -17,6 +17,7 @@ def generate_launch_description():
     rviz = LaunchConfiguration("rviz")
     gazebo_uav_visual = LaunchConfiguration("gazebo_uav_visual")
     gazebo_trail_visual = LaunchConfiguration("gazebo_trail_visual")
+    gazebo_waypoint_visual = LaunchConfiguration("gazebo_waypoint_visual")
     common = {"parameters": [config], "output": "screen"}
     return LaunchDescription(
         [
@@ -39,7 +40,15 @@ def generate_launch_description():
                 package="aerial_exploration_planner",
                 executable="gazebo_uav_visualizer",
                 name="gazebo_uav_visualizer",
-                parameters=[config, {"pose_topic": "/state_estimation", "model_sdf_path": simple_uav_sdf, "model_name": "simple_uav", "visual_z_offset": 0.25}],
+                parameters=[
+                    config,
+                    {
+                        "pose_topic": "/state_estimation",
+                        "model_sdf_path": simple_uav_sdf,
+                        "model_name": "simple_uav",
+                        "visual_z_offset": 0.0,
+                    },
+                ],
                 output="screen",
                 condition=IfCondition(gazebo_uav_visual),
             ),
@@ -47,7 +56,17 @@ def generate_launch_description():
                 package="aerial_exploration_planner",
                 executable="gazebo_trail_visualizer",
                 name="gazebo_trail_visualizer",
-                parameters=[config, {"pose_topic": "/state_estimation", "goal_topic": "/aerial_exploration/goal", "max_points": 300, "enable_waypoint_marker": LaunchConfiguration("gazebo_waypoint_visual")}],
+                parameters=[
+                    config,
+                    {
+                        "pose_topic": "/state_estimation",
+                        "goal_topic": "/aerial_exploration/goal",
+                        "max_points": 300,
+                        "trail_z_offset": 0.0,
+                        "goal_z_offset": 0.0,
+                        "enable_waypoint_marker": gazebo_waypoint_visual,
+                    },
+                ],
                 output="screen",
                 condition=IfCondition(gazebo_trail_visual),
             ),

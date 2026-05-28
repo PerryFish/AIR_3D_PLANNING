@@ -13,13 +13,19 @@ class SimpleUavFollowerNode(Node):
         super().__init__("simple_uav_follower_node")
         self.declare_parameter("uav.initial_x", -9.0)
         self.declare_parameter("uav.initial_y", -9.0)
-        self.declare_parameter("uav.initial_z", 1.5)
+        self.declare_parameter("uav.initial_z", 1.4)
         self.declare_parameter("uav.max_speed", 2.2)
         self.declare_parameter("uav.goal_tolerance", 0.35)
+        self.declare_parameter("aerial_corridor_min_z", 0.8)
+        self.declare_parameter("aerial_corridor_max_z", 2.2)
+        self.declare_parameter("aerial_corridor_default_z", 1.4)
+        self.corridor_min_z = float(self.get_parameter("aerial_corridor_min_z").value)
+        self.corridor_max_z = float(self.get_parameter("aerial_corridor_max_z").value)
+        self.corridor_default_z = self._clamp_z(float(self.get_parameter("aerial_corridor_default_z").value))
         self.position = [
             float(self.get_parameter("uav.initial_x").value),
             float(self.get_parameter("uav.initial_y").value),
-            float(self.get_parameter("uav.initial_z").value),
+            self._clamp_z(float(self.get_parameter("uav.initial_z").value)),
         ]
         self.max_speed = float(self.get_parameter("uav.max_speed").value)
         self.goal_tolerance = float(self.get_parameter("uav.goal_tolerance").value)
@@ -33,10 +39,20 @@ class SimpleUavFollowerNode(Node):
         self.create_subscription(Path, "/aerial_exploration/path", self.path_cb, 10)
         self.tf = TransformBroadcaster(self)
         self.timer = self.create_timer(0.05, self.step)
-        self.get_logger().info("Simple UAV follower publishing /odom and TF")
+        self.get_logger().info(
+            "Simple UAV follower publishing /odom and TF "
+            f"with corridor z=[{self.corridor_min_z:.2f}, {self.corridor_max_z:.2f}], "
+            f"default_z={self.corridor_default_z:.2f}"
+        )
 
     def path_cb(self, msg):
-        pts = [(p.pose.position.x, p.pose.position.y, p.pose.position.z) for p in msg.poses]
+        pts = []
+        for pose in msg.poses:
+            raw_z = pose.pose.position.z
+            z = self._clamp_z(raw_z)
+            if abs(z - raw_z) > 1e-3:
+                self.get_logger().warning(f"Clamped waypoint z from {raw_z:.3f} to {z:.3f}")
+            pts.append((pose.pose.position.x, pose.pose.position.y, z))
         if pts:
             self.path = pts
             self.target_index = min(1, len(pts) - 1)
@@ -60,8 +76,11 @@ class SimpleUavFollowerNode(Node):
         step = min(dist, self.max_speed * dt)
         self.position[0] += dx / dist * step
         self.position[1] += dy / dist * step
-        self.position[2] += dz / dist * step
+        self.position[2] = self._clamp_z(self.position[2] + dz / dist * step)
         self.yaw = math.atan2(dy, dx)
+
+    def _clamp_z(self, z):
+        return min(self.corridor_max_z, max(self.corridor_min_z, z))
 
     def _publish(self, now):
         odom = Odometry()

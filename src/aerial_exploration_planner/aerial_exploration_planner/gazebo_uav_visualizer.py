@@ -16,25 +16,35 @@ class GazeboUavVisualizer(Node):
         self.declare_parameter("model_name", "simple_uav")
         self.declare_parameter("model_sdf_path", "")
         self.declare_parameter("reference_frame", "world")
-        self.declare_parameter("visual_z_offset", 0.25)
+        self.declare_parameter("visual_z_offset", 0.0)
         self.declare_parameter("spawn_x", -9.0)
         self.declare_parameter("spawn_y", -9.0)
-        self.declare_parameter("spawn_z", 1.75)
+        self.declare_parameter("spawn_z", 1.4)
         self.declare_parameter("update_rate", 15.0)
         self.model_name = self.get_parameter("model_name").value
         self.reference_frame = self.get_parameter("reference_frame").value
         self.visual_z_offset = float(self.get_parameter("visual_z_offset").value)
         self.latest_pose = None
+        self.logged_pose = False
         self.spawned = False
         self.spawn_client = self.create_client(SpawnEntity, "/spawn_entity")
         self.state_client = self.create_client(SetEntityState, "/gazebo/set_entity_state")
         self.create_subscription(Odometry, self.get_parameter("pose_topic").value, self.odom_cb, 10)
         self.spawn_timer = self.create_timer(0.5, self.try_spawn)
         self.update_timer = self.create_timer(1.0 / float(self.get_parameter("update_rate").value), self.update_model)
-        self.get_logger().info(f"Gazebo UAV visualizer following {self.get_parameter('pose_topic').value}")
+        self.get_logger().info(
+            f"Gazebo UAV visualizer following {self.get_parameter('pose_topic').value}; "
+            f"visual_z_offset={self.visual_z_offset:.3f}"
+        )
 
     def odom_cb(self, msg):
         self.latest_pose = msg.pose.pose
+        if not self.logged_pose:
+            self.get_logger().info(
+                f"First Gazebo UAV pose z={self.latest_pose.position.z:.3f}; "
+                f"visualized_z={self.latest_pose.position.z + self.visual_z_offset:.3f}"
+            )
+            self.logged_pose = True
 
     def try_spawn(self):
         if self.spawned or not self.spawn_client.service_is_ready():

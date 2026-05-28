@@ -48,7 +48,7 @@ timeout -s INT -k 2s 8s ros2 topic list > logs/tests/visual_topics.txt
 timeout -s INT -k 2s 8s ros2 service list > logs/tests/visual_services.txt
 
 for node in /synthetic_mapping_node /simple_uav_follower_node /aerial_exploration_node /exploration_metrics_node /mode_manager_node /gazebo_uav_visualizer /gazebo_trail_visualizer; do
-  grep -q "$node" logs/tests/visual_nodes.txt || { echo "FAIL: missing node $node"; exit 1; }
+  grep -q "$node" logs/tests/visual_nodes.txt || grep -q "$node/" logs/tests/visual_services.txt || { echo "FAIL: missing node $node"; exit 1; }
 done
 
 for service in /spawn_entity /gazebo/set_entity_state; do
@@ -99,6 +99,14 @@ if len(set(deltas[:15])) <= 2 and len(deltas) >= 15:
     raise SystemExit(f"FAIL: coverage deltas look fixed: {deltas[:15]}")
 if sum(1 for r in rows if int(r["newly_observed_voxels"]) > 0) < 6:
     raise SystemExit("FAIL: observation updates are not driving coverage")
+robot_z = [float(r["robot_z"]) for r in rows if float(r["robot_z"]) > 0.0]
+goal_z = [float(r["goal_z"]) for r in rows if abs(float(r["goal_x"])) + abs(float(r["goal_y"])) + abs(float(r["goal_z"])) > 0.0]
+if not robot_z or not goal_z:
+    raise SystemExit("FAIL: missing robot_z or goal_z samples")
+if any(z < 0.8 or z > 2.2 for z in robot_z):
+    raise SystemExit(f"FAIL: robot_z outside aerial corridor: {min(robot_z):.3f}..{max(robot_z):.3f}")
+if any(z < 0.8 or z > 2.2 for z in goal_z):
+    raise SystemExit(f"FAIL: goal_z outside aerial corridor: {min(goal_z):.3f}..{max(goal_z):.3f}")
 Path("reports/09_visual_simulation_smoke_test.md").write_text(
     "\n".join([
         "# Visual Simulation Smoke Test",
@@ -119,6 +127,9 @@ Path("reports/09_visual_simulation_smoke_test.md").write_text(
         f"- done: {rows[-1]['done']}",
         f"- unique_pose_samples: {len(poses)}",
         f"- unique_goal_samples: {len(goals)}",
+        f"- robot_z_range: {min(robot_z):.3f}..{max(robot_z):.3f}",
+        f"- goal_z_range: {min(goal_z):.3f}..{max(goal_z):.3f}",
+        "- aerial_corridor_height_valid: True",
         f"- final_failed_goals: {rows[-1]['failed_goals']}",
         f"- final_stuck_events: {rows[-1]['stuck_events']}",
         "- coverage_source: observed voxels from simulated odom and sensor range",

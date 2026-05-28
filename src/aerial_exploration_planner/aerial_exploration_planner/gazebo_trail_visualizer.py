@@ -17,7 +17,8 @@ class GazeboTrailVisualizer(Node):
         self.declare_parameter("trail_model_prefix", "uav_trail")
         self.declare_parameter("min_distance", 0.8)
         self.declare_parameter("max_points", 300)
-        self.declare_parameter("trail_z_offset", 0.05)
+        self.declare_parameter("trail_z_offset", 0.0)
+        self.declare_parameter("goal_z_offset", 0.0)
         self.declare_parameter("spawn_every_n_seconds", 0.5)
         self.declare_parameter("waypoint_model_name", "current_exploration_goal")
         self.declare_parameter("reference_frame", "world")
@@ -29,7 +30,10 @@ class GazeboTrailVisualizer(Node):
         self.min_distance = float(self.get_parameter("min_distance").value)
         self.max_points = int(self.get_parameter("max_points").value)
         self.trail_z_offset = float(self.get_parameter("trail_z_offset").value)
+        self.goal_z_offset = float(self.get_parameter("goal_z_offset").value)
         self.last_pose = None
+        self.logged_pose = False
+        self.logged_goal = False
         self.last_spawn_time = self.get_clock().now()
         self.spawn_count = 0
         self.goal_spawned = False
@@ -37,10 +41,19 @@ class GazeboTrailVisualizer(Node):
         self.create_subscription(Odometry, self.get_parameter("pose_topic").value, self.odom_cb, 10)
         self.create_subscription(PoseStamped, self.get_parameter("goal_topic").value, self.goal_cb, 10)
         self.goal_timer = self.create_timer(0.2, self.update_goal_marker)
-        self.get_logger().info("Gazebo trail visualizer started")
+        self.get_logger().info(
+            f"Gazebo trail visualizer started; pose_topic={self.get_parameter('pose_topic').value}; "
+            f"goal_topic={self.get_parameter('goal_topic').value}; trail_z_offset={self.trail_z_offset:.3f}; "
+            f"goal_z_offset={self.goal_z_offset:.3f}"
+        )
 
     def odom_cb(self, msg):
         pose = msg.pose.pose
+        if not self.logged_pose:
+            self.get_logger().info(
+                f"First trail pose z={pose.position.z:.3f}; breadcrumb_z={pose.position.z + self.trail_z_offset:.3f}"
+            )
+            self.logged_pose = True
         now = self.get_clock().now()
         elapsed = (now - self.last_spawn_time).nanoseconds * 1e-9
         current = (pose.position.x, pose.position.y, pose.position.z)
@@ -60,6 +73,10 @@ class GazeboTrailVisualizer(Node):
 
     def goal_cb(self, msg):
         self.latest_goal = msg.pose
+        self.latest_goal.position.z += self.goal_z_offset
+        if not self.logged_goal:
+            self.get_logger().info(f"First Gazebo goal marker z={self.latest_goal.position.z:.3f}")
+            self.logged_goal = True
 
     def update_goal_marker(self):
         if not self._as_bool(self.get_parameter("enable_waypoint_marker").value):

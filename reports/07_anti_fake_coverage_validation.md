@@ -10,10 +10,10 @@ The anti-fake coverage test verifies:
 Observed result:
 
 - anti-fake coverage test: PASS
-- final_coverage: 0.935833
+- final_coverage: 0.935417
 - done: True
 - failed_goals: 0
 - stuck_events: 0
-- pose_changed_rows: 448
-- goal_changed_rows: 214
-- new_observation_rows: 130
+- pose_changed_rows: 145
+- goal_changed_rows: 10
+- new_observation_rows: 76

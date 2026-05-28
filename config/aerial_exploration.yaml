@@ -8,11 +8,22 @@
     dense50.ground_footprint_occupancy_ratio: 0.50
     exploration.done_threshold: 0.93
     exploration.plan_period_sec: 0.5
+    exploration.goal_reached_radius: 0.8
     mapping.publish_period_sec: 0.25
-    mapping.sensor_range: 4.2
+    mapping.sensor_range: 5.8
+    aerial_corridor_mode: true
+    aerial_corridor_min_z: 0.8
+    aerial_corridor_max_z: 2.2
+    aerial_corridor_default_z: 1.4
+    aerial_corridor_clearance: 0.25
+    avoid_flying_above_obstacle_top: true
+    max_above_obstacle_margin: 0.2
+    visual_z_offset: 0.0
+    trail_z_offset: 0.0
+    goal_z_offset: 0.0
     uav.initial_x: -9.0
     uav.initial_y: -9.0
-    uav.initial_z: 1.5
+    uav.initial_z: 1.4
     uav.max_speed: 3.0
     uav.goal_tolerance: 0.35
     metrics.csv_path: results/metrics_dense50.csv

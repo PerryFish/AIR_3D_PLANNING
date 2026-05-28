@@ -33,10 +33,16 @@ def make_dense50_ground_footprint(spec):
         (spec.x_cells - 2, spec.y_cells - 1),
         (spec.x_cells - 1, spec.y_cells - 2),
     }
+    corridor_keep_free = set()
+    for i in range(spec.x_cells):
+        if i % 4 != 0:
+            corridor_keep_free.add((i, i))
+        if i % 5 != 0:
+            corridor_keep_free.add((spec.x_cells - 1 - i, i))
     for iy in range(spec.y_cells):
         for ix in range(spec.x_cells):
             cell = (ix, iy)
-            if cell in protected:
+            if cell in protected or cell in corridor_keep_free:
                 continue
             if (ix + 2 * iy) % 4 in (0, 1):
                 occupied.add(cell)
@@ -45,7 +51,7 @@ def make_dense50_ground_footprint(spec):
     for iy in range(spec.y_cells):
         for ix in range(spec.x_cells):
             cell = (ix, iy)
-            if cell not in protected:
+            if cell not in protected and cell not in corridor_keep_free:
                 occupied.add(cell)
             if len(occupied) >= target:
                 return occupied
@@ -55,9 +61,11 @@ def make_dense50_ground_footprint(spec):
 def ground_to_occupied_voxels(spec, ground_cells):
     occupied = set()
     for ix, iy in ground_cells:
-        height = 1 + ((ix * 3 + iy * 5) % max(1, spec.z_cells - 1))
-        for iz in range(min(spec.z_cells, height)):
-            occupied.add((ix, iy, iz))
+        height_m = 0.7 + ((ix * 3 + iy * 5) % 5) * 0.45
+        for iz in range(spec.z_cells):
+            z_center = iz * spec.resolution + spec.resolution * 0.5
+            if z_center <= height_m:
+                occupied.add((ix, iy, iz))
     return occupied
 
 

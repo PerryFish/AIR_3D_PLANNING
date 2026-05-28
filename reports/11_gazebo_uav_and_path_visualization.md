@@ -47,7 +47,7 @@ Gazebo UAV visualization follows `/state_estimation`.
 - type: `nav_msgs/msg/Odometry`
 - publisher: `simple_uav_follower_node`
 - frame: `map`, treated as Gazebo `world`
-- visual z offset: `0.25 m`
+- visual z offset: `0.0 m`
 
 `/odom` is also published, but `/state_estimation` was selected because it is the existing state-estimation-style topic and is already consumed by the exploration node.
 
@@ -89,6 +89,7 @@ GUI launch check:
 
 - Gazebo UAV movement is kinematic visualization driven by ROS odometry and `/gazebo/set_entity_state`; it is not Gazebo physics flight control.
 - Gazebo trail is sampled pose breadcrumbs, not the planner's internal `nav_msgs/Path` rendered as a continuous line.
+- The current corridor fix keeps UAV, goal, and breadcrumbs at the real `/state_estimation` and goal z. It does not visually lift them above obstacles.
 
 ## Commands
 
