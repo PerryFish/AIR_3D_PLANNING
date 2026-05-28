@@ -18,6 +18,8 @@ def generate_launch_description():
     gazebo_uav_visual = LaunchConfiguration("gazebo_uav_visual")
     gazebo_trail_visual = LaunchConfiguration("gazebo_trail_visual")
     gazebo_waypoint_visual = LaunchConfiguration("gazebo_waypoint_visual")
+    sensor_mapping = LaunchConfiguration("sensor_mapping")
+    synthetic_mapping = LaunchConfiguration("synthetic_mapping")
     common = {"parameters": [config], "output": "screen"}
     return LaunchDescription(
         [
@@ -27,11 +29,15 @@ def generate_launch_description():
             DeclareLaunchArgument("gazebo_uav_visual", default_value="true"),
             DeclareLaunchArgument("gazebo_trail_visual", default_value="true"),
             DeclareLaunchArgument("gazebo_waypoint_visual", default_value="true"),
+            DeclareLaunchArgument("sensor_mapping", default_value="true"),
+            DeclareLaunchArgument("observed_coverage", default_value="true"),
+            DeclareLaunchArgument("synthetic_mapping", default_value="false"),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(gazebo_launch),
                 launch_arguments={"gui": gui, "use_sim_time": "true"}.items(),
             ),
-            Node(package="aerial_exploration_planner", executable="synthetic_mapping_node", name="synthetic_mapping_node", **common),
+            Node(package="aerial_exploration_planner", executable="sensor_mapping_node", name="sensor_mapping_node", condition=IfCondition(sensor_mapping), **common),
+            Node(package="aerial_exploration_planner", executable="synthetic_mapping_node", name="synthetic_mapping_node", condition=IfCondition(synthetic_mapping), **common),
             Node(package="aerial_exploration_planner", executable="simple_uav_follower_node", name="simple_uav_follower_node", **common),
             Node(package="aerial_exploration_planner", executable="aerial_exploration_node", name="aerial_exploration_node", **common),
             Node(package="aerial_exploration_planner", executable="exploration_metrics_node", name="exploration_metrics_node", **common),

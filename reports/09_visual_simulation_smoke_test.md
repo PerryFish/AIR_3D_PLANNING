@@ -11,11 +11,11 @@
 - a_dwa_model_path_isolated: True
 - gazebo: launched headless with dense50_ground_footprint.world
 - rviz: launch command available; smoke test used rviz:=false for CI stability
-- initial_coverage: 0.085000
-- final_coverage: 0.953333
+- initial_coverage: 0.027917
+- final_coverage: 0.951667
 - done: True
-- unique_pose_samples: 122
-- unique_goal_samples: 9
+- unique_pose_samples: 154
+- unique_goal_samples: 8
 - robot_z_range: 1.400..1.400
 - goal_z_range: 1.400..1.400
 - aerial_corridor_height_valid: True

@@ -47,7 +47,7 @@ timeout -s INT -k 2s 8s ros2 node list > logs/tests/visual_nodes.txt
 timeout -s INT -k 2s 8s ros2 topic list > logs/tests/visual_topics.txt
 timeout -s INT -k 2s 8s ros2 service list > logs/tests/visual_services.txt
 
-for node in /synthetic_mapping_node /simple_uav_follower_node /aerial_exploration_node /exploration_metrics_node /mode_manager_node /gazebo_uav_visualizer /gazebo_trail_visualizer; do
+for node in /sensor_mapping_node /simple_uav_follower_node /aerial_exploration_node /exploration_metrics_node /mode_manager_node /gazebo_uav_visualizer /gazebo_trail_visualizer; do
   grep -q "$node" logs/tests/visual_nodes.txt || grep -q "$node/" logs/tests/visual_services.txt || { echo "FAIL: missing node $node"; exit 1; }
 done
 
@@ -55,7 +55,7 @@ for service in /spawn_entity /gazebo/set_entity_state; do
   grep -q "$service" logs/tests/visual_services.txt || { echo "FAIL: missing Gazebo service $service"; exit 1; }
 done
 
-for topic in /odom /aerial_exploration/path /aerial_exploration/goal /aerial_exploration/coverage /aerial_exploration/frontiers /aerial_exploration/viewpoints /aerial_exploration/map_markers /aerial_exploration/coverage_marker; do
+for topic in /odom /aerial_exploration/path /aerial_exploration/goal /aerial_exploration/coverage /aerial_exploration/frontiers /aerial_exploration/viewpoints /aerial_exploration/coverage_marker /exploration/observed_cloud /exploration/occupied_cloud /exploration/free_cloud /exploration/unknown_frontiers /exploration/coverage_real; do
   grep -q "$topic" logs/tests/visual_topics.txt || { echo "FAIL: missing topic $topic"; exit 1; }
 done
 

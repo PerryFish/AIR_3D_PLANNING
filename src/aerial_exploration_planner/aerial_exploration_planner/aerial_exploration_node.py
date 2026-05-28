@@ -31,6 +31,7 @@ class AerialExplorationNode(Node):
         self.declare_parameter("avoid_flying_above_obstacle_top", True)
         self.declare_parameter("max_above_obstacle_margin", 0.2)
         self.declare_parameter("exploration.goal_reached_radius", 0.8)
+        self.declare_parameter("exploration.sensor_mapping_patrol_every_n_goals", 3)
         self.done_threshold = float(self.get_parameter("exploration.done_threshold").value)
         self.frame_id = self.get_parameter("frame_id").value
         self.spec = GridSpec(
@@ -45,6 +46,7 @@ class AerialExplorationNode(Node):
         self.corridor_default_z = self._clamp_z(float(self.get_parameter("aerial_corridor_default_z").value))
         self.corridor_clearance = float(self.get_parameter("aerial_corridor_clearance").value)
         self.goal_reached_radius = float(self.get_parameter("exploration.goal_reached_radius").value)
+        self.sensor_patrol_every = int(self.get_parameter("exploration.sensor_mapping_patrol_every_n_goals").value)
         self.ground_occupied = make_dense50_ground_footprint(self.spec)
         self.occupied_voxels = ground_to_occupied_voxels(self.spec, self.ground_occupied)
         self.pose = None
@@ -79,11 +81,14 @@ class AerialExplorationNode(Node):
     def tick(self):
         if not self.map_state:
             return
-        coverage = float(self.map_state.get("coverage", 0.0))
+        coverage = float(self.map_state.get("observed_coverage", self.map_state.get("coverage", 0.0)))
+        synthetic_coverage = float(self.map_state.get("synthetic_coverage", self.map_state.get("coverage", coverage)))
         coverage_msg = Float32()
         coverage_msg.data = coverage
         self.coverage_pub.publish(coverage_msg)
-        self.coverage_marker_pub.publish(self._text_marker("coverage", 9001, f"coverage={coverage:.3f}", (0.0, -11.0, 3.0)))
+        self.coverage_marker_pub.publish(
+            self._text_marker("coverage", 9001, f"observed_coverage={coverage:.3f} synthetic={synthetic_coverage:.3f}", (0.0, -11.0, 3.0))
+        )
         gr = float(self.map_state.get("ground_footprint_occupancy_ratio", 0.0))
         self.ground_marker_pub.publish(self._text_marker("ground_footprint", 9002, f"dense50 footprint={gr:.3f}", (0.0, -11.0, 2.5)))
         if self.pose is None or coverage >= self.done_threshold:
@@ -103,6 +108,9 @@ class AerialExplorationNode(Node):
 
     def _select_goal(self):
         frontiers = self.map_state.get("frontier_cells", [])
+        if self.map_state.get("mapping_source") == "sensor_driven_local_simulated_lidar_camera" and self.sensor_patrol_every > 0:
+            if self.goal_index % self.sensor_patrol_every == 0:
+                return self._nearest_free_lawnmower_goal()
         if not frontiers:
             return self._lawnmower_goal()
         candidates = []
@@ -112,7 +120,8 @@ class AerialExplorationNode(Node):
                 candidates.append(p)
         if not candidates:
             return self._nearest_free_lawnmower_goal()
-        candidates.sort(key=lambda p: (-math.dist(p, self.pose), p[0], p[1], p[2]))
+        patrol_anchor = self._lawnmower_goal()
+        candidates.sort(key=lambda p: (math.dist(p, patrol_anchor), -math.dist(p, self.pose), p[0], p[1], p[2]))
         for offset in range(len(candidates)):
             candidate = candidates[(self.goal_index + offset) % len(candidates)]
             if self.is_segment_collision_free_3d(self.pose, candidate):

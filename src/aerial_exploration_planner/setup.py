@@ -25,6 +25,7 @@ setup(
     entry_points={
         "console_scripts": [
             "synthetic_mapping_node = aerial_exploration_planner.synthetic_mapping_node:main",
+            "sensor_mapping_node = aerial_exploration_planner.sensor_mapping_node:main",
             "aerial_exploration_node = aerial_exploration_planner.aerial_exploration_node:main",
             "exploration_metrics_node = aerial_exploration_planner.exploration_metrics_node:main",
             "mode_manager_node = aerial_exploration_planner.mode_manager_node:main",

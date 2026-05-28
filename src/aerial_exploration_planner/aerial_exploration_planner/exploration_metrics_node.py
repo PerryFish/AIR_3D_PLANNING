@@ -44,6 +44,8 @@ class ExplorationMetricsNode(Node):
         self.fields = [
             "timestamp",
             "coverage",
+            "synthetic_coverage",
+            "observed_coverage",
             "done",
             "explored_voxels",
             "free_voxels",
@@ -66,6 +68,10 @@ class ExplorationMetricsNode(Node):
             "goal_changed",
             "pose_changed",
             "newly_observed_voxels",
+            "observed_voxels",
+            "frontier_count",
+            "sensor_cloud_points",
+            "mapping_source",
         ]
         self.writer = csv.DictWriter(self.csv_file, fieldnames=self.fields)
         self.writer.writeheader()
@@ -89,7 +95,9 @@ class ExplorationMetricsNode(Node):
     def publish_metrics(self):
         if not self.map_state:
             return
-        coverage = float(self.map_state.get("coverage", 0.0))
+        observed_coverage = float(self.map_state.get("observed_coverage", self.map_state.get("coverage", 0.0)))
+        synthetic_coverage = float(self.map_state.get("synthetic_coverage", self.map_state.get("coverage", observed_coverage)))
+        coverage = observed_coverage
         self.done = self.done or coverage >= self.done_threshold
         done_msg = Bool()
         done_msg.data = bool(self.done)
@@ -102,6 +110,8 @@ class ExplorationMetricsNode(Node):
         row = {
             "timestamp": f"{self.get_clock().now().nanoseconds / 1e9:.3f}",
             "coverage": f"{coverage:.6f}",
+            "synthetic_coverage": f"{synthetic_coverage:.6f}",
+            "observed_coverage": f"{observed_coverage:.6f}",
             "done": str(bool(self.done)),
             "explored_voxels": int(self.map_state.get("explored_voxels", 0)),
             "free_voxels": int(self.map_state.get("free_voxels", 0)),
@@ -124,6 +134,10 @@ class ExplorationMetricsNode(Node):
             "goal_changed": str(goal_changed),
             "pose_changed": str(pose_changed),
             "newly_observed_voxels": int(self.map_state.get("newly_observed_voxels", 0)),
+            "observed_voxels": int(self.map_state.get("observed_voxels", self.map_state.get("explored_voxels", 0))),
+            "frontier_count": int(self.map_state.get("frontier_count", len(self.map_state.get("frontier_cells", [])))),
+            "sensor_cloud_points": int(self.map_state.get("sensor_cloud_points", 0)),
+            "mapping_source": self.map_state.get("mapping_source", "synthetic_mapping_node"),
         }
         self.writer.writerow(row)
         self.csv_file.flush()

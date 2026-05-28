@@ -9,8 +9,20 @@
     exploration.done_threshold: 0.93
     exploration.plan_period_sec: 0.5
     exploration.goal_reached_radius: 0.8
+    exploration.sensor_mapping_patrol_every_n_goals: 3
     mapping.publish_period_sec: 0.25
     mapping.sensor_range: 5.8
+    sensor_mapping.publish_period_sec: 0.25
+    sensor_mapping.lidar_range: 8.0
+    sensor_mapping.lidar_initial_range: 5.0
+    sensor_mapping.lidar_step_deg: 8.0
+    sensor_mapping.camera_range: 6.0
+    sensor_mapping.camera_initial_range: 3.5
+    sensor_mapping.camera_fov_deg: 80.0
+    sensor_mapping.camera_enabled: true
+    sensor_mapping.range_warmup_sec: 8.0
+    sensor_mapping.export_dir: results/maps
+    sensor_mapping.metrics_csv_path: results/map_metrics.csv
     aerial_corridor_mode: true
     aerial_corridor_min_z: 0.8
     aerial_corridor_max_z: 2.2

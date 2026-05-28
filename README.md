@@ -2,7 +2,7 @@
 
 AIR_3D_PLANNING is a ROS2 Humble UAV 3D aerial path planning MVP. It supports 3D A*, 3D obstacle visualization, path smoothing, UAV kinematic simulation, dynamic 3D goal replanning, UAV motion diagnostics, and RViz2 visualization.
 
-This repository is intentionally lightweight: it does not depend on PX4, Gazebo, MAVROS, OctoMap, or ESDF. The goal is a reproducible ROS2 Humble aerial planning demo that can be cloned, built, and launched quickly.
+This repository is intentionally lightweight: it does not depend on PX4, MAVROS, OctoMap, or ESDF. The goal is a reproducible ROS2 Humble aerial planning and exploration demo that can be cloned, built, and launched quickly.
 
 ## System Requirements
 
@@ -136,6 +136,30 @@ benchmark 输出：
 - `max_planning_time` 太短
 - `heuristic_weight` 太小导致扩展节点过多
 
+## Gazebo UAV Corridor Exploration And Sensor Mapping Baseline
+
+The aerial exploration package includes a Gazebo/RViz dense50 demo with a visible UAV model, trajectory breadcrumbs, frontier goals, and a sensor-driven mapping baseline.
+
+```bash
+cd /home/nuaa/ZHY/AIR_3D_PLANNING_CLEAN
+set +u
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+set -u
+GAZEBO_MASTER_URI=http://127.0.0.1:11346 \
+GAZEBO_MODEL_PATH=/usr/share/gazebo-11/models \
+ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=true rviz:=true sensor_mapping:=true observed_coverage:=true
+```
+
+Important semantics:
+
+- `synthetic_coverage` is kept for backward compatibility with earlier tests.
+- `observed_coverage` is the primary mapping metric. It is built online from local simulated LiDAR rays and a camera frustum baseline.
+- The map state contains unknown/free/occupied voxels and frontier cells.
+- Exported maps are written under `results/maps/` as PCD and CSV files.
+
+This is not full SLAM or FAST-LIVO integration. It is a sensor-driven unknown-environment mapping baseline intended as the next step before real LiDAR/camera fusion.
+
 ## Main ROS2 Packages
 
 - `air_planning_msgs`
@@ -216,7 +240,7 @@ air_uav_simulator
 
 - No real PX4 flight controller.
 - No Gazebo real dynamics.
-- No real sensor-based mapping.
+- No real LiDAR/camera SLAM yet; the current sensor mapping baseline uses local simulated LiDAR/camera ray casting.
 - No OctoMap or ESDF real-time map.
 - No motor-level control.
 - No physical UAV safety stack.

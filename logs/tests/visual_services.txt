@@ -40,6 +40,12 @@
 /pause_physics
 /reset_simulation
 /reset_world
+/sensor_mapping_node/describe_parameters
+/sensor_mapping_node/get_parameter_types
+/sensor_mapping_node/get_parameters
+/sensor_mapping_node/list_parameters
+/sensor_mapping_node/set_parameters
+/sensor_mapping_node/set_parameters_atomically
 /simple_uav_follower_node/describe_parameters
 /simple_uav_follower_node/get_parameter_types
 /simple_uav_follower_node/get_parameters
@@ -47,10 +53,4 @@
 /simple_uav_follower_node/set_parameters
 /simple_uav_follower_node/set_parameters_atomically
 /spawn_entity
-/synthetic_mapping_node/describe_parameters
-/synthetic_mapping_node/get_parameter_types
-/synthetic_mapping_node/get_parameters
-/synthetic_mapping_node/list_parameters
-/synthetic_mapping_node/set_parameters
-/synthetic_mapping_node/set_parameters_atomically
 /unpause_physics

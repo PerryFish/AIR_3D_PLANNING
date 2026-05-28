@@ -32,6 +32,31 @@ Visualization Manager:
         Value: /aerial_exploration/map_markers
     - Class: rviz_default_plugins/MarkerArray
       Enabled: true
+      Name: Sensor Observed Map
+      Topic:
+        Value: /exploration/sensor_map_markers
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: true
+      Name: Local LiDAR Scan
+      Topic:
+        Value: /exploration/lidar_scan_points
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: true
+      Name: Observed Occupied Cloud
+      Topic:
+        Value: /exploration/occupied_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: true
+      Name: Observed Free Cloud
+      Topic:
+        Value: /exploration/free_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: true
+      Name: Unknown Frontiers Cloud
+      Topic:
+        Value: /exploration/unknown_frontiers
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
       Name: Frontiers
       Topic:
         Value: /aerial_exploration/frontiers
@@ -50,6 +75,16 @@ Visualization Manager:
       Name: Coverage Text
       Topic:
         Value: /aerial_exploration/coverage_marker
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Observed Coverage Text
+      Topic:
+        Value: /exploration/observed_coverage_marker
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Synthetic Coverage Text
+      Topic:
+        Value: /exploration/synthetic_coverage_marker
     - Class: rviz_default_plugins/Marker
       Enabled: true
       Name: Ground Footprint Text

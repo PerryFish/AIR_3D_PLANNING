@@ -66,3 +66,4 @@ The validation scripts check that:
 - robot and goal z are not above `2.5 + 0.2 m`;
 - Gazebo visual offsets are zero by default;
 - coverage still reaches `>= 0.93` with `done=True`.
+- In the sensor mapping baseline, the corridor planner consumes frontier cells from the online observed map rather than only the legacy synthetic radius map.

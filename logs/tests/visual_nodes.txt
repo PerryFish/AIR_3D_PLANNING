@@ -4,5 +4,5 @@
 /gazebo_trail_visualizer
 /gazebo_uav_visualizer
 /mode_manager_node
+/sensor_mapping_node
 /simple_uav_follower_node
-/synthetic_mapping_node

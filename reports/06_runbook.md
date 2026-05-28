@@ -15,6 +15,9 @@ timeout -s INT -k 10s 180s scripts/run_aerial_exploration_tests.sh
 timeout -s INT -k 10s 120s scripts/run_anti_fake_coverage_tests.sh
 timeout -s INT -k 10s 180s scripts/run_visual_exploration_smoke_test.sh
 timeout -s INT -k 10s 120s scripts/check_aerial_corridor_height.sh
+timeout -s INT -k 10s 180s scripts/run_sensor_mapping_smoke_test.sh
+timeout -s INT -k 10s 120s scripts/check_observed_coverage_not_fake.sh
+timeout -s INT -k 10s 120s scripts/check_map_export.sh
 ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=true rviz:=true
 ros2 launch aerial_exploration_planner gazebo_dense50.launch.py gui:=true
 ```
@@ -35,5 +38,15 @@ Recommended GUI launch:
 ```bash
 GAZEBO_MASTER_URI=http://127.0.0.1:11346 \
 GAZEBO_MODEL_PATH=/usr/share/gazebo-11/models \
-ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=true rviz:=true
+ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=true rviz:=true sensor_mapping:=true observed_coverage:=true
 ```
+
+Sensor-driven mapping topics:
+
+```bash
+ros2 topic echo /exploration/coverage_real
+ros2 topic echo /exploration/map_metrics
+ros2 topic list | grep /exploration
+```
+
+Map export files are written to `results/maps/`.

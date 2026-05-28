@@ -1,27 +1,29 @@
 # Dense50 Aerial Exploration Test Summary
 
 - passed: True
-- final_coverage: 0.935417
-- done: True
+- legacy_synthetic_final_coverage: 0.938333
+- legacy_synthetic_done: True
+- sensor_mapping_final_observed_coverage: 0.942083
+- sensor_mapping_final_synthetic_coverage: 0.942083
+- sensor_mapping_done: True
 - failed_goals: 0
 - stuck_events: 0
 - measured_ground_footprint_occupancy_ratio: 0.500000
-- robot_xyz: (5.532, -0.305, 1.400)
-- goal_xyz: (5.500, -6.500, 1.400)
-- newly_observed_voxels: 0
-- gazebo_uav_model_visible: True
-- gazebo_trail_breadcrumbs_visible: True
-- gazebo_goal_marker_visible: True
+- robot_xyz: (7.504, -2.807, 1.400)
+- goal_xyz: (7.500, -4.500, 1.400)
+- newly_observed_voxels: 1
 - visual_smoke_test: PASS
 - aerial_corridor_height_check: PASS
-- old_synthetic_test: PASS
+- sensor_mapping_smoke_test: PASS
+- observed_coverage_not_fake_test: PASS
+- map_export_test: PASS
+- legacy_aerial_exploration_test: PASS
 - anti_fake_coverage_test: PASS
-- aerial_corridor_mode: True
-- dense50_obstacle_height_range_m: 0.7-2.5
-- aerial_corridor_z_range_m: 0.8-2.2
-- aerial_corridor_default_z_m: 1.4
-- visual_z_offset_m: 0.0
-- trail_z_offset_m: 0.0
-- coverage_rule: done is true only when coverage >= 0.93
+- map_export_path: results/maps
+- coverage_rule: done is true only when observed_coverage/coverage >= 0.93
 - dense50_definition: XY ground obstacle footprint occupancy ratio, not 3D voxel occupancy
-- limitation: corridor planning is currently 3D occupied-voxel checking plus XY A* at fixed aerial corridor z, not full kinodynamic multi-altitude UAV planning
+- lidar_source: local simulated ray casting from current UAV pose
+- camera_source: simulated camera frustum ray casting from current UAV pose
+- unknown_free_occupied_map: True
+- frontier_extraction: True
+- limitation: sensor mapping is a local simulated sensor baseline, not full SLAM or FAST-LIVO
