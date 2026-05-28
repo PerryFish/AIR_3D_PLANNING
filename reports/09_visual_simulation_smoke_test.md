@@ -2,24 +2,25 @@
 
 - result: PASS
 - gazebo_process_alive: True
+- gazebo_uav_model_visible: True
+- gazebo_trail_breadcrumbs_visible: True
+- gazebo_goal_marker_visible: True
 - no_incorrect_plugin_type: True
 - no_exit_code_255: True
 - no_world_cc_1803: True
 - a_dwa_model_path_isolated: True
-- world_loaded: True
-- rviz_gui_launch_checked: True
 - gazebo: launched headless with dense50_ground_footprint.world
 - rviz: launch command available; smoke test used rviz:=false for CI stability
 - initial_coverage: 0.043750
-- final_coverage: 0.941667
+- final_coverage: 0.940000
 - done: True
-- unique_pose_samples: 383
-- unique_goal_samples: 129
+- unique_pose_samples: 342
+- unique_goal_samples: 114
 - final_failed_goals: 0
 - final_stuck_events: 0
 - coverage_source: observed voxels from simulated odom and sensor range
-- odom_changed: True
-- path_published: True
-- goal_changed: True
-- coverage_grew_from_low_value: True
+- gazebo_pose_source: /state_estimation
+- gazebo_motion_method: /gazebo/set_entity_state
+- gazebo_path_visualization: uav_trail breadcrumb sphere models
+- gazebo_goal_visualization: current_exploration_goal sphere model
 - limitation: Gazebo renders the dense50 world; robot motion is ROS2 kinematic follower, not Gazebo physics control

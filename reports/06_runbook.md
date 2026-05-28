@@ -17,3 +17,14 @@ timeout -s INT -k 10s 180s scripts/run_visual_exploration_smoke_test.sh
 ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=true rviz:=true
 ros2 launch aerial_exploration_planner gazebo_dense50.launch.py gui:=true
 ```
+
+Gazebo visual exploration should show the dense50 world, blue `simple_uav` model, green breadcrumb trail spheres, and a yellow current goal marker. If the UAV is not visible:
+
+```bash
+ros2 node list | grep gazebo
+ros2 service list | grep -E "spawn|state|model"
+ros2 service call /get_model_list gazebo_msgs/srv/GetModelList "{}"
+echo "$GAZEBO_MODEL_PATH"
+```
+
+If the trail is not visible, check that `/state_estimation` is publishing, `gazebo_trail_visualizer` is running, and `min_distance` or `max_points` have not filtered out new breadcrumbs.

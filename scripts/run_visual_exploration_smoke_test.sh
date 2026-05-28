@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 mkdir -p results logs/tests reports
-rm -f logs/tests/visual_exploration_smoke.log logs/tests/visual_topics.txt logs/tests/visual_nodes.txt logs/tests/visual_metrics_tail.csv reports/09_visual_simulation_smoke_test.md
+rm -f logs/tests/visual_exploration_smoke.log logs/tests/visual_topics.txt logs/tests/visual_nodes.txt logs/tests/visual_services.txt logs/tests/visual_models.txt logs/tests/visual_metrics_tail.csv reports/09_visual_simulation_smoke_test.md
 
 python3 scripts/generate_dense50_gazebo_world.py > logs/tests/visual_world_generation.log
 
@@ -17,6 +17,7 @@ export GAZEBO_MODEL_PATH="/usr/share/gazebo-11/models"
 export GAZEBO_RESOURCE_PATH="${GAZEBO_RESOURCE_PATH:-}"
 export GAZEBO_PLUGIN_PATH="${GAZEBO_PLUGIN_PATH:-}"
 export GAZEBO_MASTER_URI="${GAZEBO_MASTER_URI:-http://127.0.0.1:11346}"
+export ROS_DOMAIN_ID="${ROS_DOMAIN_ID:-57}"
 
 setsid ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=false rviz:=false > logs/tests/visual_exploration_smoke.log 2>&1 &
 LAUNCH_PID=$!
@@ -44,9 +45,14 @@ if grep -E "incorrect plugin type|exit code 255|World.cc:1803|Missing model.conf
 fi
 timeout -s INT -k 2s 8s ros2 node list > logs/tests/visual_nodes.txt
 timeout -s INT -k 2s 8s ros2 topic list > logs/tests/visual_topics.txt
+timeout -s INT -k 2s 8s ros2 service list > logs/tests/visual_services.txt
 
-for node in /synthetic_mapping_node /simple_uav_follower_node /aerial_exploration_node /exploration_metrics_node /mode_manager_node; do
+for node in /synthetic_mapping_node /simple_uav_follower_node /aerial_exploration_node /exploration_metrics_node /mode_manager_node /gazebo_uav_visualizer /gazebo_trail_visualizer; do
   grep -q "$node" logs/tests/visual_nodes.txt || { echo "FAIL: missing node $node"; exit 1; }
+done
+
+for service in /spawn_entity /gazebo/set_entity_state; do
+  grep -q "$service" logs/tests/visual_services.txt || { echo "FAIL: missing Gazebo service $service"; exit 1; }
 done
 
 for topic in /odom /aerial_exploration/path /aerial_exploration/goal /aerial_exploration/coverage /aerial_exploration/frontiers /aerial_exploration/viewpoints /aerial_exploration/map_markers /aerial_exploration/coverage_marker; do
@@ -65,6 +71,10 @@ if grep -E "incorrect plugin type|exit code 255|World.cc:1803|Missing model.conf
   exit 1
 fi
 tail -n 40 results/metrics_dense50.csv > logs/tests/visual_metrics_tail.csv
+timeout -s INT -k 2s 8s ros2 service call /get_model_list gazebo_msgs/srv/GetModelList "{}" > logs/tests/visual_models.txt
+grep -q "simple_uav" logs/tests/visual_models.txt || { echo "FAIL: simple_uav model not found in Gazebo"; cat logs/tests/visual_models.txt; exit 1; }
+grep -q "uav_trail_" logs/tests/visual_models.txt || { echo "FAIL: no uav_trail breadcrumb models found in Gazebo"; cat logs/tests/visual_models.txt; exit 1; }
+grep -q "current_exploration_goal" logs/tests/visual_models.txt || { echo "FAIL: current_exploration_goal marker not found in Gazebo"; cat logs/tests/visual_models.txt; exit 1; }
 
 python3 - <<'PY'
 import csv
@@ -95,6 +105,9 @@ Path("reports/09_visual_simulation_smoke_test.md").write_text(
         "",
         "- result: PASS",
         "- gazebo_process_alive: True",
+        "- gazebo_uav_model_visible: True",
+        "- gazebo_trail_breadcrumbs_visible: True",
+        "- gazebo_goal_marker_visible: True",
         "- no_incorrect_plugin_type: True",
         "- no_exit_code_255: True",
         "- no_world_cc_1803: True",
