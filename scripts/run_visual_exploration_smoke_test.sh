@@ -13,6 +13,11 @@ source /opt/ros/humble/setup.bash
 source install/setup.bash
 set -u
 
+export GAZEBO_MODEL_PATH="/usr/share/gazebo-11/models"
+export GAZEBO_RESOURCE_PATH="${GAZEBO_RESOURCE_PATH:-}"
+export GAZEBO_PLUGIN_PATH="${GAZEBO_PLUGIN_PATH:-}"
+export GAZEBO_MASTER_URI="${GAZEBO_MASTER_URI:-http://127.0.0.1:11346}"
+
 setsid ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=false rviz:=false > logs/tests/visual_exploration_smoke.log 2>&1 &
 LAUNCH_PID=$!
 
@@ -27,6 +32,16 @@ cleanup() {
 trap cleanup EXIT
 
 sleep 3
+if ! kill -0 "$LAUNCH_PID" >/dev/null 2>&1; then
+  echo "FAIL: visual launch process exited early"
+  tail -n 120 logs/tests/visual_exploration_smoke.log || true
+  exit 1
+fi
+if grep -E "incorrect plugin type|exit code 255|World.cc:1803|Missing model.config.*A_DWA" logs/tests/visual_exploration_smoke.log >/dev/null; then
+  echo "FAIL: Gazebo startup log contains plugin/model-path error"
+  grep -E "incorrect plugin type|exit code 255|World.cc:1803|Missing model.config.*A_DWA" logs/tests/visual_exploration_smoke.log || true
+  exit 1
+fi
 timeout -s INT -k 2s 8s ros2 node list > logs/tests/visual_nodes.txt
 timeout -s INT -k 2s 8s ros2 topic list > logs/tests/visual_topics.txt
 
@@ -39,6 +54,16 @@ for topic in /odom /aerial_exploration/path /aerial_exploration/goal /aerial_exp
 done
 
 python3 scripts/wait_for_exploration_done.py --timeout 120 --coverage-threshold 0.93 >> logs/tests/visual_exploration_smoke.log 2>&1
+if ! kill -0 "$LAUNCH_PID" >/dev/null 2>&1; then
+  echo "FAIL: visual launch process exited before test completion"
+  tail -n 120 logs/tests/visual_exploration_smoke.log || true
+  exit 1
+fi
+if grep -E "incorrect plugin type|exit code 255|World.cc:1803|Missing model.config.*A_DWA" logs/tests/visual_exploration_smoke.log >/dev/null; then
+  echo "FAIL: Gazebo log contains plugin/model-path error"
+  grep -E "incorrect plugin type|exit code 255|World.cc:1803|Missing model.config.*A_DWA" logs/tests/visual_exploration_smoke.log || true
+  exit 1
+fi
 tail -n 40 results/metrics_dense50.csv > logs/tests/visual_metrics_tail.csv
 
 python3 - <<'PY'
@@ -69,6 +94,11 @@ Path("reports/09_visual_simulation_smoke_test.md").write_text(
         "# Visual Simulation Smoke Test",
         "",
         "- result: PASS",
+        "- gazebo_process_alive: True",
+        "- no_incorrect_plugin_type: True",
+        "- no_exit_code_255: True",
+        "- no_world_cc_1803: True",
+        "- a_dwa_model_path_isolated: True",
         "- gazebo: launched headless with dense50_ground_footprint.world",
         "- rviz: launch command available; smoke test used rviz:=false for CI stability",
         f"- initial_coverage: {coverages[0]:.6f}",

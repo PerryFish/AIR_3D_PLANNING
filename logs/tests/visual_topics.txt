@@ -13,8 +13,10 @@
 /aerial_exploration/selected_goal_marker
 /aerial_exploration/uav_marker
 /aerial_exploration/viewpoints
+/clock
 /odom
 /parameter_events
+/performance_metrics
 /rosout
 /state_estimation
 /tf

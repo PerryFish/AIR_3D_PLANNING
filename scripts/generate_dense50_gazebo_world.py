@@ -70,7 +70,6 @@ def make_world(path):
     text = f"""<?xml version='1.0'?>
 <sdf version='1.6'>
   <world name='dense50_ground_footprint'>
-    <plugin name='gazebo_ros_init' filename='libgazebo_ros_init.so'/>
     <include><uri>model://sun</uri></include>
     <model name='ground_plane'>
       <static>true</static>
