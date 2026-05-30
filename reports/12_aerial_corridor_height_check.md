@@ -9,5 +9,5 @@
 - robot_z_max: 1.400
 - goal_z_min: 1.400
 - goal_z_max: 1.400
-- final_coverage: 0.932083
+- final_coverage: 0.937083
 - done: True

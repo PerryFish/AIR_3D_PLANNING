@@ -3,7 +3,8 @@ import math
 from pathlib import Path
 
 from geometry_msgs.msg import Point
-from nav_msgs.msg import Odometry
+from geometry_msgs.msg import PoseStamped
+from nav_msgs.msg import Odometry, Path as NavPath
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import PointCloud2
@@ -11,7 +12,7 @@ from sensor_msgs_py import point_cloud2
 from std_msgs.msg import Float32, String
 from visualization_msgs.msg import Marker, MarkerArray
 
-from .grid_model import GridSpec, grid_to_world, ground_to_occupied_voxels, in_bounds, make_dense50_ground_footprint, world_to_grid
+from .grid_model import GridSpec, grid_to_world, ground_to_occupied_voxels, in_bounds, make_ground_footprint, world_to_grid
 
 
 class SensorMappingNode(Node):
@@ -22,7 +23,11 @@ class SensorMappingNode(Node):
         self.declare_parameter("grid.y_cells", 20)
         self.declare_parameter("grid.z_cells", 6)
         self.declare_parameter("grid.resolution", 1.0)
+        self.declare_parameter("grid.origin_x", 0.0)
+        self.declare_parameter("grid.origin_y", 0.0)
         self.declare_parameter("dense50.ground_footprint_occupancy_ratio", 0.50)
+        self.declare_parameter("sensor_mapping.environment_model", "dense50")
+        self.declare_parameter("sensor_mapping.mapping_source_label", "sensor_driven_local_simulated_lidar_camera")
         self.declare_parameter("sensor_mapping.publish_period_sec", 0.25)
         self.declare_parameter("sensor_mapping.lidar_range", 5.8)
         self.declare_parameter("sensor_mapping.lidar_initial_range", 5.5)
@@ -34,15 +39,26 @@ class SensorMappingNode(Node):
         self.declare_parameter("sensor_mapping.range_warmup_sec", 8.0)
         self.declare_parameter("sensor_mapping.export_dir", "results/maps")
         self.declare_parameter("sensor_mapping.metrics_csv_path", "results/map_metrics.csv")
+        self.declare_parameter("exploration.target_observed_coverage", 0.93)
+        self.declare_parameter("local_planning_box.x_size", 8.0)
+        self.declare_parameter("local_planning_box.y_size", 8.0)
+        self.declare_parameter("local_planning_box.z_size", 3.0)
+        self.declare_parameter("local_planning_box.line_width", 0.05)
+        self.declare_parameter("local_planning_box.alpha", 0.25)
+        self.declare_parameter("altitude_planning.adaptive_z_enabled", False)
         self.frame_id = self.get_parameter("frame_id").value
+        self.environment_model = str(self.get_parameter("sensor_mapping.environment_model").value)
+        self.mapping_source_label = str(self.get_parameter("sensor_mapping.mapping_source_label").value)
         self.spec = GridSpec(
             int(self.get_parameter("grid.x_cells").value),
             int(self.get_parameter("grid.y_cells").value),
             int(self.get_parameter("grid.z_cells").value),
             float(self.get_parameter("grid.resolution").value),
             float(self.get_parameter("dense50.ground_footprint_occupancy_ratio").value),
+            float(self.get_parameter("grid.origin_x").value),
+            float(self.get_parameter("grid.origin_y").value),
         )
-        self.ground_occupied = make_dense50_ground_footprint(self.spec)
+        self.ground_occupied = make_ground_footprint(self.spec, self.environment_model)
         self.truth_occupied = ground_to_occupied_voxels(self.spec, self.ground_occupied)
         self.free = set()
         self.occupied = set()
@@ -60,6 +76,8 @@ class SensorMappingNode(Node):
         self.camera_initial_range = float(self.get_parameter("sensor_mapping.camera_initial_range").value)
         self.camera_fov = math.radians(float(self.get_parameter("sensor_mapping.camera_fov_deg").value))
         self.camera_enabled = self._as_bool(self.get_parameter("sensor_mapping.camera_enabled").value)
+        self.target_observed_coverage = float(self.get_parameter("exploration.target_observed_coverage").value)
+        self.adaptive_z_enabled = self._as_bool(self.get_parameter("altitude_planning.adaptive_z_enabled").value)
         self.range_warmup_sec = float(self.get_parameter("sensor_mapping.range_warmup_sec").value)
         self.start_time = self.get_clock().now()
         self.map_pub = self.create_publisher(String, "/aerial_exploration/map_state", 10)
@@ -67,12 +85,20 @@ class SensorMappingNode(Node):
         self.coverage_pub = self.create_publisher(Float32, "/exploration/coverage_real", 10)
         self.observed_cloud_pub = self.create_publisher(PointCloud2, "/exploration/observed_cloud", 10)
         self.occupied_cloud_pub = self.create_publisher(PointCloud2, "/exploration/occupied_cloud", 10)
+        self.structure_cloud_pub = self.create_publisher(PointCloud2, "/exploration/structure_cloud", 10)
+        self.observed_structure_cloud_pub = self.create_publisher(PointCloud2, "/exploration/observed_structure_cloud", 10)
+        self.local_obstacle_cloud_pub = self.create_publisher(PointCloud2, "/exploration/local_obstacle_cloud", 10)
+        self.local_sensor_cloud_pub = self.create_publisher(PointCloud2, "/exploration/local_sensor_cloud", 10)
         self.free_cloud_pub = self.create_publisher(PointCloud2, "/exploration/free_cloud", 10)
         self.frontier_cloud_pub = self.create_publisher(PointCloud2, "/exploration/unknown_frontiers", 10)
+        self.frontier_cloud_alias_pub = self.create_publisher(PointCloud2, "/exploration/frontier_cloud", 10)
         self.scan_cloud_pub = self.create_publisher(PointCloud2, "/exploration/lidar_scan_points", 10)
         self.marker_pub = self.create_publisher(MarkerArray, "/exploration/sensor_map_markers", 10)
         self.coverage_marker_pub = self.create_publisher(Marker, "/exploration/observed_coverage_marker", 10)
         self.synthetic_marker_pub = self.create_publisher(Marker, "/exploration/synthetic_coverage_marker", 10)
+        self.coverage_text_pub = self.create_publisher(Marker, "/exploration/coverage_text", 10)
+        self.local_planning_box_pub = self.create_publisher(Marker, "/exploration/local_planning_box", 10)
+        self.trajectory_path_pub = self.create_publisher(NavPath, "/exploration/trajectory_path", 10)
         self.create_subscription(Odometry, "/state_estimation", self.odom_cb, 10)
         self.create_subscription(String, "/exploration/save_map", self.save_cb, 10)
         self.timer = self.create_timer(float(self.get_parameter("sensor_mapping.publish_period_sec").value), self.publish_state)
@@ -81,7 +107,7 @@ class SensorMappingNode(Node):
         self.metrics_file = self.metrics_path.open("w")
         self.metrics_file.write(
             "time,robot_x,robot_y,robot_z,synthetic_coverage,observed_coverage,observed_voxels,free_voxels,"
-            "occupied_voxels,unknown_voxels,frontier_count,path_length,sensor_cloud_points\n"
+            "occupied_voxels,unknown_voxels,frontier_count,path_length,sensor_cloud_points,mapping_source,environment_model\n"
         )
         self.metrics_file.flush()
         self.get_logger().info("Sensor-driven mapping baseline started with local simulated LiDAR/camera frustum")
@@ -167,7 +193,8 @@ class SensorMappingNode(Node):
         observed_coverage = observed / self.spec.total_voxels
         synthetic_coverage = observed_coverage
         payload = {
-            "mapping_source": "sensor_driven_local_simulated_lidar_camera",
+            "mapping_source": self.mapping_source_label,
+            "environment_model": self.environment_model,
             "synthetic_coverage": synthetic_coverage,
             "observed_coverage": observed_coverage,
             "coverage": observed_coverage,
@@ -198,16 +225,38 @@ class SensorMappingNode(Node):
         self.coverage_pub.publish(cov)
         self._publish_clouds()
         self.marker_pub.publish(self._markers())
-        self.coverage_marker_pub.publish(self._text_marker("observed_coverage", 9101, f"observed_coverage={observed_coverage:.3f}", (0.0, -12.0, 3.2)))
-        self.synthetic_marker_pub.publish(self._text_marker("synthetic_coverage", 9102, f"synthetic_coverage={synthetic_coverage:.3f}", (0.0, -12.0, 2.7)))
+        path_length = self._path_length()
+        self.coverage_marker_pub.publish(self._text_marker("observed_coverage", 9101, f"obs={observed_coverage:.3f}", (-15.0, -16.0, 3.0)))
+        self.synthetic_marker_pub.publish(self._text_marker("synthetic_coverage", 9102, f"sim={synthetic_coverage:.3f}", (-15.0, -16.0, 2.6)))
+        self.coverage_text_pub.publish(
+            self._text_marker(
+                "coverage_summary",
+                9103,
+                f"obs {observed_coverage:.3f}/{self.target_observed_coverage:.2f} | "
+                f"frontiers {len(self.frontiers)} | path {path_length:.1f}m | "
+                f"z {self.latest_pose[2]:.2f} adaptive {self.adaptive_z_enabled}",
+                (-15.0, -16.0, 3.4),
+            )
+        )
+        self.trajectory_path_pub.publish(self._trajectory_path())
+        self.local_planning_box_pub.publish(self._local_planning_box())
         self._write_metrics_row(payload)
 
     def _publish_clouds(self):
         self.observed_cloud_pub.publish(self._cloud([grid_to_world(self.spec, idx) for idx in self.observed]))
-        self.occupied_cloud_pub.publish(self._cloud([grid_to_world(self.spec, idx) for idx in self.occupied]))
+        occupied_points = [grid_to_world(self.spec, idx) for idx in self.occupied]
+        self.occupied_cloud_pub.publish(self._cloud(occupied_points))
+        observed_structure = self._cloud(occupied_points)
+        self.structure_cloud_pub.publish(observed_structure)
+        self.observed_structure_cloud_pub.publish(observed_structure)
+        self.local_obstacle_cloud_pub.publish(self._cloud(self._local_points(occupied_points)))
         self.free_cloud_pub.publish(self._cloud([grid_to_world(self.spec, idx) for idx in self.free]))
-        self.frontier_cloud_pub.publish(self._cloud([grid_to_world(self.spec, idx) for idx in self.frontiers]))
-        self.scan_cloud_pub.publish(self._cloud(self.last_scan_points))
+        frontier_cloud = self._cloud([grid_to_world(self.spec, idx) for idx in self.frontiers])
+        self.frontier_cloud_pub.publish(frontier_cloud)
+        self.frontier_cloud_alias_pub.publish(frontier_cloud)
+        scan_cloud = self._cloud(self.last_scan_points)
+        self.scan_cloud_pub.publish(scan_cloud)
+        self.local_sensor_cloud_pub.publish(scan_cloud)
 
     def _cloud(self, points):
         header = __import__("std_msgs.msg").msg.Header()
@@ -255,14 +304,82 @@ class SensorMappingNode(Node):
         return marker
 
     def _write_metrics_row(self, payload):
-        path_length = sum(math.dist(a, b) for a, b in zip(self.trajectory, self.trajectory[1:]))
+        path_length = self._path_length()
         self.metrics_file.write(
             f"{self.get_clock().now().nanoseconds / 1e9:.3f},{self.latest_pose[0]:.3f},{self.latest_pose[1]:.3f},{self.latest_pose[2]:.3f},"
             f"{payload['synthetic_coverage']:.6f},{payload['observed_coverage']:.6f},{payload['observed_voxels']},"
             f"{payload['free_voxels']},{payload['occupied_voxels']},{payload['unknown_voxels']},{payload['frontier_count']},"
-            f"{path_length:.3f},{payload['sensor_cloud_points']}\n"
+            f"{path_length:.3f},{payload['sensor_cloud_points']},{payload['mapping_source']},{payload['environment_model']}\n"
         )
         self.metrics_file.flush()
+
+    def _path_length(self):
+        return sum(math.dist(a, b) for a, b in zip(self.trajectory, self.trajectory[1:]))
+
+    def _trajectory_path(self):
+        path = NavPath()
+        path.header.frame_id = self.frame_id
+        path.header.stamp = self.get_clock().now().to_msg()
+        for p in self.trajectory:
+            pose = PoseStamped()
+            pose.header = path.header
+            pose.pose.position.x, pose.pose.position.y, pose.pose.position.z = p
+            pose.pose.orientation.w = 1.0
+            path.poses.append(pose)
+        return path
+
+    def _local_points(self, points):
+        if self.latest_pose is None:
+            return points[:500]
+        x_size = float(self.get_parameter("local_planning_box.x_size").value)
+        y_size = float(self.get_parameter("local_planning_box.y_size").value)
+        z_size = float(self.get_parameter("local_planning_box.z_size").value)
+        px, py, pz = self.latest_pose
+        return [
+            p
+            for p in points
+            if abs(p[0] - px) <= x_size * 0.5 and abs(p[1] - py) <= y_size * 0.5 and abs(p[2] - pz) <= z_size * 0.5
+        ]
+
+    def _local_planning_box(self):
+        marker = Marker()
+        marker.header.frame_id = self.frame_id
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = "local_planning_box"
+        marker.id = 9201
+        marker.type = Marker.LINE_LIST
+        marker.action = Marker.ADD
+        x_size = float(self.get_parameter("local_planning_box.x_size").value)
+        y_size = float(self.get_parameter("local_planning_box.y_size").value)
+        z_size = float(self.get_parameter("local_planning_box.z_size").value)
+        line_width = float(self.get_parameter("local_planning_box.line_width").value)
+        alpha = float(self.get_parameter("local_planning_box.alpha").value)
+        marker.scale.x = line_width
+        marker.color.r, marker.color.g, marker.color.b, marker.color.a = (0.18, 0.55, 0.28, alpha)
+        cx, cy, cz = self.latest_pose if self.latest_pose else (0.0, 0.0, 0.0)
+        hx, hy, hz = x_size * 0.5, y_size * 0.5, z_size * 0.5
+        corners = [
+            (cx - hx, cy - hy, cz - hz),
+            (cx + hx, cy - hy, cz - hz),
+            (cx + hx, cy + hy, cz - hz),
+            (cx - hx, cy + hy, cz - hz),
+            (cx - hx, cy - hy, cz + hz),
+            (cx + hx, cy - hy, cz + hz),
+            (cx + hx, cy + hy, cz + hz),
+            (cx - hx, cy + hy, cz + hz),
+        ]
+        edges = [
+            (0, 1), (1, 2), (2, 3), (3, 0),
+            (4, 5), (5, 6), (6, 7), (7, 4),
+            (0, 4), (1, 5), (2, 6), (3, 7),
+        ]
+        for start, end in edges:
+            for idx in (start, end):
+                point = Point()
+                point.x, point.y, point.z = corners[idx]
+                marker.points.append(point)
+        marker.pose.orientation.w = 1.0
+        return marker
 
     def save_cb(self, _msg):
         self.save_map()

@@ -1,0 +1,159 @@
+source_project: /home/nuaa/ZHY/TARE_V1
+target_project: /home/nuaa/ZHY/AIR_3D_PLANNING_CLEAN
+target_dir: src/virtual_env/garage_v1/rviz
+copied_rviz_files:
+- tare_v1_original_rviz/install/tare_planner/share/tare_planner/tare_planner_ground.rviz
+- tare_v1_original_rviz/install/vehicle_simulator/share/vehicle_simulator/rviz/vehicle_simulator.rviz
+- tare_v1_original_rviz/install/velodyne_description/share/velodyne_description/rviz/example.rviz
+- tare_v1_original_rviz/src/autonomous_exploration_development_environment/src/vehicle_simulator/rviz/vehicle_simulator.rviz
+- tare_v1_original_rviz/src/autonomous_exploration_development_environment/src/velodyne_simulator/velodyne_description/rviz/example.rviz
+- tare_v1_original_rviz/src/tare_planner/src/tare_planner/rviz/tare_planner_ground.rviz
+copied_launch_files:
+- tare_v1_launch_reference/install/loam_interface/share/loam_interface/launch/loam_interface.launch
+- tare_v1_launch_reference/install/local_planner/share/local_planner/launch/local_planner.launch
+- tare_v1_launch_reference/install/sensor_scan_generation/share/sensor_scan_generation/launch/sensor_scan_generation.launch
+- tare_v1_launch_reference/install/tare_planner/share/tare_planner/explore.launch
+- tare_v1_launch_reference/install/tare_planner/share/tare_planner/explore_garage.launch
+- tare_v1_launch_reference/install/terrain_analysis/share/terrain_analysis/launch/terrain_analysis.launch
+- tare_v1_launch_reference/install/terrain_analysis_ext/share/terrain_analysis_ext/launch/terrain_analysis_ext.launch
+- tare_v1_launch_reference/install/vehicle_simulator/share/vehicle_simulator/launch/system_garage.launch
+- tare_v1_launch_reference/install/vehicle_simulator/share/vehicle_simulator/launch/vehicle_simulator.launch
+- tare_v1_launch_reference/install/visualization_tools/share/visualization_tools/launch/visualization_tools.launch
+- tare_v1_launch_reference/install/waypoint_example/share/waypoint_example/launch/waypoint_example_garage.launch
+- tare_v1_launch_reference/src/autonomous_exploration_development_environment/src/loam_interface/launch/loam_interface.launch
+- tare_v1_launch_reference/src/autonomous_exploration_development_environment/src/local_planner/launch/local_planner.launch
+- tare_v1_launch_reference/src/autonomous_exploration_development_environment/src/sensor_scan_generation/launch/sensor_scan_generation.launch
+- tare_v1_launch_reference/src/autonomous_exploration_development_environment/src/terrain_analysis/launch/terrain_analysis.launch
+- tare_v1_launch_reference/src/autonomous_exploration_development_environment/src/terrain_analysis_ext/launch/terrain_analysis_ext.launch
+- tare_v1_launch_reference/src/autonomous_exploration_development_environment/src/vehicle_simulator/launch/system_garage.launch
+- tare_v1_launch_reference/src/autonomous_exploration_development_environment/src/vehicle_simulator/launch/vehicle_simulator.launch
+- tare_v1_launch_reference/src/autonomous_exploration_development_environment/src/visualization_tools/launch/visualization_tools.launch
+- tare_v1_launch_reference/src/autonomous_exploration_development_environment/src/waypoint_example/launch/waypoint_example_garage.launch
+- tare_v1_launch_reference/src/tare_planner/src/tare_planner/launch/explore.launch
+- tare_v1_launch_reference/src/tare_planner/src/tare_planner/launch/explore_garage.launch
+copied_config_files:
+- tare_v1_config_reference/backups_before_P4_escape_rescan_20260526_163703/garage.yaml
+- tare_v1_config_reference/backups_before_watchdog_blacklist_fix_20260526_133714/garage.yaml
+- tare_v1_config_reference/install/tare_planner/share/tare_planner/campus.yaml
+- tare_v1_config_reference/install/tare_planner/share/tare_planner/forest.yaml
+- tare_v1_config_reference/install/tare_planner/share/tare_planner/garage.yaml
+- tare_v1_config_reference/install/tare_planner/share/tare_planner/indoor.yaml
+- tare_v1_config_reference/install/tare_planner/share/tare_planner/matterport.yaml
+- tare_v1_config_reference/install/tare_planner/share/tare_planner/tunnel.yaml
+- tare_v1_config_reference/src/tare_planner/src/tare_planner/config/campus.yaml
+- tare_v1_config_reference/src/tare_planner/src/tare_planner/config/forest.yaml
+- tare_v1_config_reference/src/tare_planner/src/tare_planner/config/garage.yaml
+- tare_v1_config_reference/src/tare_planner/src/tare_planner/config/indoor.yaml
+- tare_v1_config_reference/src/tare_planner/src/tare_planner/config/matterport.yaml
+- tare_v1_config_reference/src/tare_planner/src/tare_planner/config/tunnel.yaml
+copied_docs:
+- tare_v1_docs_reference/DEPLOY_NOTES.md
+- tare_v1_docs_reference/DEPLOY_REPORT.md
+- tare_v1_docs_reference/TARE_INTERFACE_FOR_BIMODAL_UAV.md
+- tare_v1_docs_reference/fix_reports/P2_P3_watchdog_blacklist/P2_P3_WATCHDOG_BLACKLIST_FIX_REPORT.md
+- tare_v1_docs_reference/fix_reports/P2_P3_watchdog_blacklist/runtime_test_summary.md
+- tare_v1_docs_reference/fix_reports/P4_escape_rescan/P4_ESCAPE_RESCAN_FIX_REPORT.md
+- tare_v1_docs_reference/fix_reports/P4_escape_rescan/runtime_test_summary.md
+- tare_v1_docs_reference/fix_reports/runtime_stability/RUNTIME_STABILITY_FIX_REPORT.md
+- tare_v1_docs_reference/fix_reports/runtime_stability/launch_script_runtime_fix.md
+- tare_v1_docs_reference/fix_reports/runtime_stability/stable_p4_test_summary.md
+- tare_v1_docs_reference/fix_reports/runtime_test_after_nan_guard.md
+- tare_v1_docs_reference/review_reports/COMMAND_LOG.md
+- tare_v1_docs_reference/review_reports/TARE_STUCK_AND_NAN_REVIEW_REPORT.md
+- tare_v1_docs_reference/review_reports/WAYPOINT_GENERATION_TRACE.md
+- tare_v1_docs_reference/src/autonomous_exploration_development_environment/README.md
+- tare_v1_docs_reference/src/tare_planner/README.md
+copied_pointcloud_files:
+- tare_v1_pointcloud_reference/install/local_planner/share/local_planner/paths/pathList.ply
+- tare_v1_pointcloud_reference/install/local_planner/share/local_planner/paths/paths.ply
+- tare_v1_pointcloud_reference/install/local_planner/share/local_planner/paths/startPaths.ply
+- tare_v1_pointcloud_reference/install/tare_planner/share/tare_planner/boundary.ply
+- tare_v1_pointcloud_reference/install/waypoint_example/share/waypoint_example/data/boundary_garage.ply
+- tare_v1_pointcloud_reference/install/waypoint_example/share/waypoint_example/data/waypoints_garage.ply
+- tare_v1_pointcloud_reference/src/autonomous_exploration_development_environment/src/local_planner/paths/pathList.ply
+- tare_v1_pointcloud_reference/src/autonomous_exploration_development_environment/src/local_planner/paths/startPaths.ply
+- tare_v1_pointcloud_reference/src/autonomous_exploration_development_environment/src/waypoint_example/data/boundary_garage.ply
+- tare_v1_pointcloud_reference/src/autonomous_exploration_development_environment/src/waypoint_example/data/waypoints_garage.ply
+- tare_v1_pointcloud_reference/src/tare_planner/src/tare_planner/data/boundary.ply
+large_files_not_copied:
+- path: /home/nuaa/ZHY/TARE_V1/src/autonomous_exploration_development_environment/src/vehicle_simulator/mesh/garage/preview/pointcloud.ply
+  size: 53M
+  reason: key garage preview cloud; large, already downsampled elsewhere in AIR, not
+    copied into RViz bundle
+- path: /home/nuaa/ZHY/TARE_V1/src/autonomous_exploration_development_environment/src/local_planner/paths/paths.ply
+  size: 3.3M
+  reason: not garage-specific display-critical; install symlink/copy path reference
+    is included as small file
+core_tare_v1_topics:
+  structure_cloud:
+  - /registered_scan
+  - /overall_map
+  - /planner_cloud
+  - /terrain_map
+  - /terrain_map_ext
+  registered_scan: /registered_scan
+  terrain_map:
+  - /terrain_map
+  - /terrain_map_ext
+  odometry:
+  - /state_estimation
+  - /state_estimation_at_scan
+  path:
+  - /path
+  - /global_path
+  - /local_path
+  - /exploration_path
+  waypoint:
+  - /way_point
+  - /selected_viewpoint_vis_cloud
+  - /viewpoint_vis_cloud
+  - /lookahead_point_cloud
+  local_planning:
+  - /tare_visualizer/local_planning_horizon
+  - /tare_visualizer/exploring_subspaces
+  - /planner_cloud
+  - /free_paths
+  image: /camera/image_raw
+  boundary: /navigation_boundary
+  explored:
+  - /explored_areas
+  - /uncovered_cloud
+  - /uncovered_frontier_cloud
+recommended_air_topic_mapping:
+- tare_topic: /registered_scan
+  air_topic: /exploration/local_sensor_cloud or /exploration/observed_structure_cloud
+- tare_topic: /overall_map
+  air_topic: /exploration/garage_structure_cloud plus /exploration/observed_structure_cloud
+- tare_topic: /terrain_map
+  air_topic: /exploration/structure_cloud or /exploration/occupied_cloud
+- tare_topic: /terrain_map_ext
+  air_topic: /exploration/local_obstacle_cloud or /exploration/occupied_cloud
+- tare_topic: /global_path
+  air_topic: /aerial_exploration/path
+- tare_topic: /local_path
+  air_topic: /aerial_exploration/path or future local path publisher
+- tare_topic: /path
+  air_topic: /exploration/trajectory_path
+- tare_topic: /way_point
+  air_topic: /aerial_exploration/goal or /aerial_exploration/selected_goal_marker
+- tare_topic: /tare_visualizer/local_planning_horizon
+  air_topic: /exploration/local_planning_box
+- tare_topic: /viewpoint_vis_cloud
+  air_topic: /exploration/frontier_cloud or future viewpoint candidate cloud
+- tare_topic: /selected_viewpoint_vis_cloud
+  air_topic: /aerial_exploration/selected_goal_marker or future selected viewpoint
+    cloud
+- tare_topic: /navigation_boundary
+  air_topic: future /exploration/navigation_boundary marker/polygon
+- tare_topic: /camera/image_raw
+  air_topic: future Gazebo camera topic
+notes:
+- This bundle is for RViz/display reproduction only; no AIR algorithm files were modified
+  in this collection pass.
+- TARE planner RViz fixed frame is map.
+- vehicle_simulator.rviz highlights /registered_scan as the live grey-white structure
+  cloud.
+- tare_planner_ground.rviz highlights /overall_map, /explored_areas, local planning
+  horizon, paths, waypoints, and viewpoint clouds.
+- The large original garage preview pointcloud is recorded but not copied to keep
+  bundle size manageable.

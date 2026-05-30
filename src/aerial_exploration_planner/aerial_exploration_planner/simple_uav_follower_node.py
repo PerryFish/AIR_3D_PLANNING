@@ -14,8 +14,15 @@ class SimpleUavFollowerNode(Node):
         self.declare_parameter("uav.initial_x", -9.0)
         self.declare_parameter("uav.initial_y", -9.0)
         self.declare_parameter("uav.initial_z", 1.4)
+        self.declare_parameter("uav.initial_yaw", 0.0)
+        self.declare_parameter("garage_v1.start_pose.x", self.get_parameter("uav.initial_x").value)
+        self.declare_parameter("garage_v1.start_pose.y", self.get_parameter("uav.initial_y").value)
+        self.declare_parameter("garage_v1.start_pose.z", self.get_parameter("uav.initial_z").value)
+        self.declare_parameter("garage_v1.start_pose.yaw", self.get_parameter("uav.initial_yaw").value)
         self.declare_parameter("uav.max_speed", 2.2)
+        self.declare_parameter("uav.max_vertical_speed", 0.8)
         self.declare_parameter("uav.goal_tolerance", 0.35)
+        self.declare_parameter("altitude_planning.adaptive_z_enabled", False)
         self.declare_parameter("aerial_corridor_min_z", 0.8)
         self.declare_parameter("aerial_corridor_max_z", 2.2)
         self.declare_parameter("aerial_corridor_default_z", 1.4)
@@ -23,15 +30,17 @@ class SimpleUavFollowerNode(Node):
         self.corridor_max_z = float(self.get_parameter("aerial_corridor_max_z").value)
         self.corridor_default_z = self._clamp_z(float(self.get_parameter("aerial_corridor_default_z").value))
         self.position = [
-            float(self.get_parameter("uav.initial_x").value),
-            float(self.get_parameter("uav.initial_y").value),
-            self._clamp_z(float(self.get_parameter("uav.initial_z").value)),
+            float(self.get_parameter("garage_v1.start_pose.x").value),
+            float(self.get_parameter("garage_v1.start_pose.y").value),
+            self._clamp_z(float(self.get_parameter("garage_v1.start_pose.z").value)),
         ]
         self.max_speed = float(self.get_parameter("uav.max_speed").value)
+        self.max_vertical_speed = float(self.get_parameter("uav.max_vertical_speed").value)
+        self.adaptive_z_enabled = self._as_bool(self.get_parameter("altitude_planning.adaptive_z_enabled").value)
         self.goal_tolerance = float(self.get_parameter("uav.goal_tolerance").value)
         self.path = []
         self.target_index = 0
-        self.yaw = 0.0
+        self.yaw = float(self.get_parameter("garage_v1.start_pose.yaw").value)
         self.last_time = self.get_clock().now()
         self.odom_pub = self.create_publisher(Odometry, "/odom", 10)
         self.state_pub = self.create_publisher(Odometry, "/state_estimation", 10)
@@ -42,7 +51,7 @@ class SimpleUavFollowerNode(Node):
         self.get_logger().info(
             "Simple UAV follower publishing /odom and TF "
             f"with corridor z=[{self.corridor_min_z:.2f}, {self.corridor_max_z:.2f}], "
-            f"default_z={self.corridor_default_z:.2f}"
+            f"default_z={self.corridor_default_z:.2f}, adaptive_z_enabled={self.adaptive_z_enabled}"
         )
 
     def path_cb(self, msg):
@@ -76,11 +85,19 @@ class SimpleUavFollowerNode(Node):
         step = min(dist, self.max_speed * dt)
         self.position[0] += dx / dist * step
         self.position[1] += dy / dist * step
-        self.position[2] = self._clamp_z(self.position[2] + dz / dist * step)
+        target_z = self._clamp_z(target[2])
+        z_delta = target_z - self.position[2]
+        z_step = max(-self.max_vertical_speed * dt, min(self.max_vertical_speed * dt, z_delta))
+        self.position[2] = self._clamp_z(self.position[2] + z_step)
         self.yaw = math.atan2(dy, dx)
 
     def _clamp_z(self, z):
         return min(self.corridor_max_z, max(self.corridor_min_z, z))
+
+    def _as_bool(self, value):
+        if isinstance(value, bool):
+            return value
+        return str(value).lower() in ("1", "true", "yes", "on")
 
     def _publish(self, now):
         odom = Odometry()

@@ -1,0 +1,125 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Enabled: true
+      Name: Ground Grid
+      Alpha: 0.25
+      Color: 70; 70; 70
+      Plane Cell Count: 40
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Name: TF
+    - Class: rviz_default_plugins/Odometry
+      Enabled: true
+      Name: UAV Odometry
+      Shape: Arrow
+      Topic:
+        Value: /odom
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.85
+      Color: 70; 70; 70
+      Color Transformer: FlatColor
+      Enabled: true
+      Name: Garage Structure Cloud
+      Size (m): 0.02
+      Style: Points
+      Topic:
+        Value: /exploration/garage_structure_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.55
+      Color: 150; 150; 150
+      Color Transformer: FlatColor
+      Enabled: true
+      Name: Observed Occupied Structure
+      Size (m): 0.025
+      Style: Points
+      Topic:
+        Value: /exploration/structure_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.45
+      Color: 80; 140; 170
+      Color Transformer: FlatColor
+      Enabled: true
+      Name: Local Sensor Cloud
+      Size (m): 0.03
+      Style: Points
+      Topic:
+        Value: /exploration/local_sensor_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.45
+      Color: 210; 80; 60
+      Color Transformer: FlatColor
+      Enabled: true
+      Name: Frontier Candidates
+      Size (m): 0.035
+      Style: Points
+      Topic:
+        Value: /exploration/frontier_cloud
+    - Class: rviz_default_plugins/Path
+      Color: 60; 150; 255
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.02
+      Name: UAV Trajectory
+      Topic:
+        Value: /exploration/trajectory_path
+    - Class: rviz_default_plugins/Path
+      Color: 20; 220; 120
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.025
+      Name: Planned Path
+      Topic:
+        Value: /aerial_exploration/path
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Current Goal
+      Topic:
+        Value: /aerial_exploration/selected_goal_marker
+    - Class: rviz_default_plugins/Marker
+      Enabled: false
+      Name: Debug Local Planning Box
+      Topic:
+        Value: /exploration/local_planning_box
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: false
+      Name: Debug Frontier Viewpoints
+      Topic:
+        Value: /aerial_exploration/viewpoints
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Coverage Text
+      Topic:
+        Value: /exploration/coverage_text
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.12
+      Color: 90; 90; 90
+      Color Transformer: FlatColor
+      Enabled: false
+      Name: Debug Observed Free Voxel Cloud
+      Size (m): 0.015
+      Style: Points
+      Topic:
+        Value: /exploration/free_cloud
+  Enabled: true
+  Global Options:
+    Background Color: 0; 0; 0
+    Fixed Frame: map
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 38
+      Pitch: 0.82
+      Target Frame: map
+      Yaw: 0.72
+Window Geometry:
+  Height: 900
+  Width: 1400

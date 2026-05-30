@@ -1,0 +1,169 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Enabled: true
+      Name: Grid
+      Alpha: 0.18
+      Color: 60; 60; 60
+      Line Style:
+        Line Width: 0.029999999329447746
+      Plane Cell Count: 80
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Name: TF
+    - Class: rviz_default_plugins/Odometry
+      Enabled: true
+      Name: Vehicle / UAV Odometry
+      Shape: Axes
+      Topic:
+        Value: /odom
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.78
+      Color: 210; 210; 210
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Name: OverallMap
+      Queue Size: 10
+      Selectable: true
+      Size (m): 0.012
+      Style: Points
+      Topic:
+        Value: /overall_map
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.95
+      Color: 255; 255; 255
+      Color Transformer: FlatColor
+      Decay Time: 10
+      Enabled: true
+      Name: RegScan
+      Queue Size: 10
+      Selectable: true
+      Size (m): 0.04
+      Style: Points
+      Topic:
+        Value: /registered_scan
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.65
+      Color: 0; 170; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Name: ExploredAreas
+      Queue Size: 10
+      Size (m): 0.014
+      Style: Points
+      Topic:
+        Value: /explored_areas
+    - Class: rviz_default_plugins/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.05
+      Name: Path
+      Topic:
+        Value: /path
+    - Class: rviz_default_plugins/Path
+      Color: 45; 66; 253
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.08
+      Name: LocalPath
+      Topic:
+        Value: /local_path
+    - Class: rviz_default_plugins/Path
+      Color: 98; 240; 231
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.08
+      Name: GlobalPath
+      Topic:
+        Value: /global_path
+    - Class: rviz_default_plugins/PointStamped
+      Color: 204; 41; 204
+      Enabled: true
+      History Length: 1
+      Name: Waypoint
+      Radius: 0.22
+      Topic:
+        Value: /way_point
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.55
+      Color: 0; 170; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Name: FreePaths
+      Queue Size: 10
+      Size (m): 0.02
+      Style: Points
+      Topic:
+        Value: /free_paths
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.45
+      Color: 255; 25; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: false
+      Name: UncoveredCloud
+      Queue Size: 10
+      Size (m): 0.06
+      Style: Points
+      Topic:
+        Value: /uncovered_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.5
+      Color: 204; 0; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: false
+      Name: UncoveredFrontierCloud
+      Queue Size: 10
+      Size (m): 0.08
+      Style: Points
+      Topic:
+        Value: /uncovered_frontier_cloud
+    - Class: rviz_default_plugins/Marker
+      Enabled: false
+      Name: LocalPlanningHorizon
+      Topic:
+        Value: /tare_visualizer/local_planning_horizon
+    - Class: rviz_default_plugins/Marker
+      Enabled: false
+      Name: ExploringSubspaces
+      Topic:
+        Value: /tare_visualizer/exploring_subspaces
+    - Class: rviz_default_plugins/Polygon
+      Color: 0; 255; 0
+      Enabled: false
+      Name: NavigationBoundary
+      Topic:
+        Value: /navigation_boundary
+    - Class: rviz_default_plugins/Image
+      Enabled: false
+      Name: CameraImage
+      Topic:
+        Value: /camera/image_raw
+  Enabled: true
+  Global Options:
+    Background Color: 0; 0; 0
+    Fixed Frame: map
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 95
+      Pitch: 0.9
+      Target Frame: map
+      Yaw: 0.78
+Window Geometry:
+  Height: 900
+  Width: 1400

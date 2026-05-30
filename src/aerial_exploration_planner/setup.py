@@ -1,7 +1,19 @@
 from glob import glob
+import os
 from setuptools import setup
 
 package_name = "aerial_exploration_planner"
+
+
+def tree_data_files(source_dir, install_prefix):
+    files = []
+    for root, _, names in os.walk(source_dir):
+        if not names:
+            continue
+        rel = os.path.relpath(root, source_dir)
+        target = install_prefix if rel == "." else os.path.join(install_prefix, rel)
+        files.append((target, [os.path.join(root, name) for name in names]))
+    return files
 
 setup(
     name=package_name,
@@ -15,7 +27,8 @@ setup(
         ("share/" + package_name + "/rviz", glob("rviz/*.rviz")),
         ("share/" + package_name + "/worlds", glob("worlds/*.world")),
         ("share/" + package_name + "/models/simple_uav", glob("models/simple_uav/*")),
-    ],
+    ]
+    + tree_data_files("../virtual_env/garage_v1", "share/" + package_name + "/virtual_env/garage_v1"),
     install_requires=["setuptools"],
     zip_safe=True,
     maintainer="nuaa",
@@ -32,6 +45,8 @@ setup(
             "simple_uav_follower_node = aerial_exploration_planner.simple_uav_follower_node:main",
             "gazebo_uav_visualizer = aerial_exploration_planner.gazebo_uav_visualizer:main",
             "gazebo_trail_visualizer = aerial_exploration_planner.gazebo_trail_visualizer:main",
+            "garage_structure_cloud_node = aerial_exploration_planner.garage_structure_cloud_node:main",
+            "tare_rviz_replay_bridge_node = aerial_exploration_planner.tare_rviz_replay_bridge_node:main",
         ],
     },
 )

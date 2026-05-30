@@ -1,0 +1,36 @@
+name: garage_v1
+source_project: /home/nuaa/ZHY/TARE_V1
+source_world: src/autonomous_exploration_development_environment/src/vehicle_simulator/world/garage.world
+source_model: src/autonomous_exploration_development_environment/src/vehicle_simulator/mesh/garage
+target_world: src/virtual_env/garage_v1/worlds/garage_v1.world
+target_model_path: src/virtual_env/garage_v1/models
+primary_model: garage
+system_gazebo_models:
+  - /usr/share/gazebo-11/models/sun
+copied_assets:
+  worlds:
+    - worlds/garage_v1.world
+  models:
+    - models/garage/model.config
+    - models/garage/model.sdf
+    - models/garage/meshes/garage.dae
+  launch_reference:
+    - launch_reference/system_garage.launch
+    - launch_reference/vehicle_simulator.launch
+    - launch_reference/explore_garage.launch
+    - launch_reference/explore_generic.launch
+    - launch_reference/waypoint_example_garage.launch
+  rviz:
+    - rviz/vehicle_simulator.rviz
+    - rviz/tare_planner_ground.rviz
+  config:
+    - config/tare_garage.yaml
+  maps:
+    - maps/waypoints_garage.ply
+    - maps/boundary_garage.ply
+excluded_assets:
+  - source: src/autonomous_exploration_development_environment/src/vehicle_simulator/mesh/garage/preview/pointcloud.ply
+    reason: preview/reference point cloud, about 55 MB, not required by Gazebo runtime
+notes:
+  - garage_v1.world removes TARE/rotors world plugins; ROS Gazebo plugins are loaded by launch with -s.
+  - AIR exploration uses a simulated local sensor fallback for this environment until a real Gazebo lidar pipeline is added.

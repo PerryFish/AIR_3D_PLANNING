@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
-mkdir -p results logs/tests reports results/maps
+mkdir -p results logs/tests logs/ros logs/gazebo_home reports results/maps
 rm -f logs/tests/sensor_mapping_smoke.log logs/tests/sensor_mapping_topics.txt logs/tests/sensor_mapping_metrics_tail.csv
 rm -f results/metrics_dense50.csv results/map_metrics.csv
 
@@ -14,6 +14,8 @@ set -u
 
 export GAZEBO_MODEL_PATH="/usr/share/gazebo-11/models"
 export GAZEBO_MASTER_URI="${GAZEBO_MASTER_URI:-http://127.0.0.1:11348}"
+export ROS_LOG_DIR="${ROS_LOG_DIR:-$ROOT/logs/ros}"
+export HOME="${GAZEBO_TEST_HOME:-$ROOT/logs/gazebo_home}"
 export ROS_DOMAIN_ID="${ROS_DOMAIN_ID:-59}"
 
 setsid ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=false rviz:=false sensor_mapping:=true observed_coverage:=true > logs/tests/sensor_mapping_smoke.log 2>&1 &

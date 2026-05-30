@@ -19,6 +19,8 @@ class GazeboTrailVisualizer(Node):
         self.declare_parameter("max_points", 300)
         self.declare_parameter("trail_z_offset", 0.0)
         self.declare_parameter("goal_z_offset", 0.0)
+        self.declare_parameter("trail_radius", 0.16)
+        self.declare_parameter("goal_radius", 0.35)
         self.declare_parameter("spawn_every_n_seconds", 0.5)
         self.declare_parameter("waypoint_model_name", "current_exploration_goal")
         self.declare_parameter("reference_frame", "world")
@@ -31,6 +33,8 @@ class GazeboTrailVisualizer(Node):
         self.max_points = int(self.get_parameter("max_points").value)
         self.trail_z_offset = float(self.get_parameter("trail_z_offset").value)
         self.goal_z_offset = float(self.get_parameter("goal_z_offset").value)
+        self.trail_radius = float(self.get_parameter("trail_radius").value)
+        self.goal_radius = float(self.get_parameter("goal_radius").value)
         self.last_pose = None
         self.logged_pose = False
         self.logged_goal = False
@@ -117,7 +121,7 @@ class GazeboTrailVisualizer(Node):
     <static>true</static>
     <link name='link'>
       <visual name='trail'>
-        <geometry><sphere><radius>0.16</radius></sphere></geometry>
+        <geometry><sphere><radius>{self.trail_radius:.3f}</radius></sphere></geometry>
         <material><ambient>0.0 1.0 0.25 1</ambient><diffuse>0.0 1.0 0.25 1</diffuse></material>
       </visual>
     </link>
@@ -131,7 +135,7 @@ class GazeboTrailVisualizer(Node):
     <static>true</static>
     <link name='link'>
       <visual name='goal'>
-        <geometry><sphere><radius>0.35</radius></sphere></geometry>
+        <geometry><sphere><radius>{self.goal_radius:.3f}</radius></sphere></geometry>
         <material><ambient>1.0 0.9 0.0 1</ambient><diffuse>1.0 0.9 0.0 1</diffuse></material>
       </visual>
     </link>

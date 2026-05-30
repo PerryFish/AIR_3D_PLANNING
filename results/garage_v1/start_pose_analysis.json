@@ -1,0 +1,80 @@
+{
+  "air_garage_transform": {
+    "pitch": 0.0,
+    "roll": 0.0,
+    "x": -23.817,
+    "y": -46.018,
+    "yaw": 0.0,
+    "z": 0.073
+  },
+  "candidates": [
+    {
+      "distance_to_bounds_center_xy": 51.81163394351077,
+      "inside_center_core_30pct": false,
+      "inside_edge_bounds": true,
+      "name": "tare_start_transformed_by_air_garage_pose",
+      "x": -23.817,
+      "y": -46.018,
+      "yaw": 0.0,
+      "z": 1.6
+    },
+    {
+      "distance_to_bounds_center_xy": 19.087216264043047,
+      "inside_center_core_30pct": true,
+      "inside_edge_bounds": true,
+      "name": "old_air_start",
+      "x": -13.5,
+      "y": -13.5,
+      "yaw": 0.0,
+      "z": 1.6
+    },
+    {
+      "distance_to_bounds_center_xy": 0.0,
+      "inside_center_core_30pct": true,
+      "inside_edge_bounds": true,
+      "name": "bounds_center",
+      "x": -0.0033107681274415768,
+      "y": -0.003289123323241938,
+      "yaw": 0.0,
+      "z": 1.6
+    }
+  ],
+  "edge_bounds": {
+    "x_max": 63.84917202758789,
+    "x_min": -63.855793563842774,
+    "y_max": 71.3302937282986,
+    "y_min": -71.33687197494508,
+    "z_max": 4.999910877227784,
+    "z_min": -0.03829900068044663
+  },
+  "edge_density_ratio": 0.008902224300105652,
+  "edge_point_count": 41110,
+  "method": "Use TARE garage vehicle start (0,0,0.75,yaw=0) transformed by AIR garage world pose from edge-cloud metadata.",
+  "notes": [
+    "The old AIR start is in the central part of the shifted garage frame and is not TARE-equivalent.",
+    "The recommended pose preserves TARE's garage start relative to the garage model while keeping AIR altitude at 1.6 m."
+  ],
+  "old_air_start_pose": {
+    "x": -13.5,
+    "y": -13.5,
+    "yaw": 0.0,
+    "z": 1.6
+  },
+  "recommended_inside_center_core_30pct": false,
+  "recommended_inside_edge_bounds": true,
+  "recommended_start_pose": {
+    "x": -23.817,
+    "y": -46.018,
+    "yaw": 0.0,
+    "z": 1.6
+  },
+  "recommended_start_region": "between the two opening regions / corridor entrance area",
+  "surface_point_count": 4617947,
+  "tare_start_pose": {
+    "frame": "map",
+    "x": 0.0,
+    "y": 0.0,
+    "yaw": 0.0,
+    "z": 0.75
+  }
+}

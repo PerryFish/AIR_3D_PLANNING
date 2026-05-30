@@ -160,6 +160,79 @@ Important semantics:
 
 This is not full SLAM or FAST-LIVO integration. It is a sensor-driven unknown-environment mapping baseline intended as the next step before real LiDAR/camera fusion.
 
+## Garage V1 Gazebo Exploration
+
+The TARE_V1 garage scene is available as a self-contained AIR virtual environment under `src/virtual_env/garage_v1`.
+
+Build, then launch only Gazebo:
+
+```bash
+set +u
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+set -u
+
+GAZEBO_MASTER_URI=http://127.0.0.1:11346 \
+ros2 launch aerial_exploration_planner gazebo_garage_v1.launch.py gui:=true
+```
+
+Launch Gazebo + RViz + AIR exploration:
+
+```bash
+GAZEBO_MASTER_URI=http://127.0.0.1:11346 \
+ros2 launch aerial_exploration_planner visual_aerial_exploration_garage_v1.launch.py gui:=true rviz:=true
+```
+
+One-command wrapper:
+
+```bash
+./scripts/run_garage_v1_visual_exploration.sh
+./scripts/run_garage_v1_visual_exploration.sh start_x:=-23.817 start_y:=-46.018 start_z:=1.6 start_yaw:=0.0
+./scripts/run_garage_v1_visual_exploration.sh rviz_view_mode:=debug
+./scripts/run_garage_v1_visual_exploration.sh rviz_view_mode:=voxel
+```
+
+Garage V1 currently uses the AIR online observed-map planner with a simulated local sensor fallback for garage occupancy. It is not full SLAM or FAST-LIVO.
+
+Garage V1 visualization notes:
+
+- Gazebo loads `model://garage` from `src/virtual_env/garage_v1/models` or the installed package share path.
+- The launch resolves an absolute `garage_v1.world` path and fails if Gazebo would otherwise load `empty.world`.
+- The garage mesh is recentered in `garage_v1.world` so the building appears around the AIR exploration area.
+- `garage_wall_proxy` is spawned by default as a thin gray visual outline aid when the original DAE is hard to inspect. It has no collision.
+- RViz defaults to `rviz_profile:=tare_edge_replay`, loading `garage_v1_tare_edge_replay.rviz`.
+- The default garage start pose is `(-23.817,-46.018,1.6)`, yaw `0.0`, derived from TARE garage `(0,0,0.75)` plus the AIR garage transform. This aligns `/state_estimation`, `/odom`, Gazebo UAV visualization, planner/mapping grid origin, and `/exploration/start_pose_marker`.
+- Default RViz shows an extracted TARE edge cloud on `/overall_map` and `/exploration/garage_edge_cloud`, not dense face sampling.
+- The dense preview/surface cloud is retained only on `/exploration/debug_surface_cloud` and is disabled by default.
+- `/exploration/observed_structure_cloud` is the online observed occupied structure from the simulated local sensor map; it is separate from the full static reference cloud.
+- Clean RViz also shows local sensor cloud, trajectory, planned path, current goal, and compact coverage text. Frontier and voxel debug layers are disabled by default.
+- The local planning box means the planner's local search window around the UAV. It is not a garage wall or room outline, so it is disabled by default and only shown in debug mode.
+- `rviz_view_mode:=debug` opens local planning box, local obstacle cloud, free cloud, and frontier viewpoints.
+- `rviz_view_mode:=voxel` opens full voxel map displays for coverage debugging.
+- Garage adaptive altitude is enabled with z levels `0.8, 1.2, 1.6, 2.0, 2.4, 2.8`; the follower tracks waypoint z instead of forcing a single default altitude.
+- Garage exploration target coverage is `0.75` because the indoor-like scene has narrow corridors and dead ends.
+
+Garage validation:
+
+```bash
+timeout -s INT -k 10s 120s scripts/check_garage_v1_assets.sh
+timeout -s INT -k 10s 120s scripts/check_garage_v1_world_not_empty.sh
+timeout -s INT -k 10s 90s scripts/run_garage_v1_gazebo_smoke_test.sh
+timeout -s INT -k 10s 120s scripts/check_garage_v1_start_pose_alignment.sh
+timeout -s INT -k 10s 120s scripts/check_garage_edge_cloud_quality.sh
+timeout -s INT -k 10s 180s scripts/check_tare_edge_replay_topics.sh
+timeout -s INT -k 10s 120s scripts/check_garage_v1_tare_edge_rviz_profile.sh
+timeout -s INT -k 10s 120s scripts/check_garage_v1_structure_cloud.sh
+timeout -s INT -k 10s 120s scripts/check_garage_v1_rviz_gazebo_alignment.sh
+timeout -s INT -k 10s 120s scripts/check_garage_v1_rviz_tare_reference_view.sh
+timeout -s INT -k 10s 120s scripts/check_garage_v1_rviz_clean_view.sh
+timeout -s INT -k 10s 120s scripts/check_garage_v1_gazebo_visual_usability.sh
+timeout -s INT -k 10s 240s scripts/run_garage_v1_visual_exploration_smoke_test.sh
+timeout -s INT -k 10s 240s scripts/check_garage_v1_adaptive_altitude.sh
+timeout -s INT -k 10s 300s scripts/check_garage_v1_coverage_target.sh
+timeout -s INT -k 10s 180s scripts/check_garage_v1_frontier_goal_ratio.sh
+```
+
 ## Main ROS2 Packages
 
 - `air_planning_msgs`
@@ -346,6 +419,27 @@ Use Ctrl+C once in the launch terminal. The Python nodes use guarded shutdown lo
 ## Difference From TARE_V1
 
 TARE_V1 used `vehicle_simulator`, `localPlanner`, `pathFollower`, and fixed-height or ground-like execution assumptions. AIR_3D_PLANNING implements a standalone ROS2 Humble 3D aerial planner and simple UAV kinematic simulator. It does not modify TARE_V1.
+
+## Garage V1 TARE RViz Replay
+
+Garage V1 now has a TARE-style RViz replay profile that publishes AIR data on the original TARE display topic names:
+
+```bash
+cd /home/nuaa/ZHY/AIR_3D_PLANNING_CLEAN
+./scripts/run_garage_v1_visual_exploration.sh
+```
+
+Manual launch:
+
+```bash
+GAZEBO_MASTER_URI=http://127.0.0.1:11346 \
+ros2 launch aerial_exploration_planner visual_aerial_exploration_garage_v1.launch.py \
+  gui:=true rviz:=true rviz_profile:=tare_edge_replay
+```
+
+The replay bridge publishes `/overall_map`, `/registered_scan`, `/terrain_map`, `/terrain_map_ext`, `/explored_areas`, `/path`, `/local_path`, `/global_path`, `/way_point`, `/free_paths`, and `/uncovered_frontier_cloud`. The RViz config is `garage_v1_tare_edge_replay.rviz`; voxel cube and dense surface debug layers are not shown by default.
+
+The same launch accepts `start_x`, `start_y`, `start_z`, and `start_yaw` overrides. The default uses the transformed TARE garage start and shows a small `/exploration/start_pose_marker` arrow.
 
 ## Documentation
 

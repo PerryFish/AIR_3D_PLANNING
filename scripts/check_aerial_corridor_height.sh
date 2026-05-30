@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
-mkdir -p logs/tests reports
+mkdir -p logs/tests logs/ros logs/gazebo_home reports
 rm -f logs/tests/aerial_corridor_height.log logs/tests/aerial_corridor_height_metrics.csv
 
 set +u
@@ -13,6 +13,8 @@ set -u
 
 export GAZEBO_MODEL_PATH="/usr/share/gazebo-11/models"
 export GAZEBO_MASTER_URI="${GAZEBO_MASTER_URI:-http://127.0.0.1:11347}"
+export ROS_LOG_DIR="${ROS_LOG_DIR:-$ROOT/logs/ros}"
+export HOME="${GAZEBO_TEST_HOME:-$ROOT/logs/gazebo_home}"
 export ROS_DOMAIN_ID="${ROS_DOMAIN_ID:-58}"
 
 setsid ros2 launch aerial_exploration_planner visual_aerial_exploration_dense50.launch.py gui:=false rviz:=false > logs/tests/aerial_corridor_height.log 2>&1 &

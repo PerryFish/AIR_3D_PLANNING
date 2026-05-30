@@ -1,0 +1,112 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Enabled: true
+      Name: Ground Grid
+      Plane Cell Count: 40
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Name: TF
+    - Class: rviz_default_plugins/Odometry
+      Enabled: true
+      Name: UAV Odometry
+      Topic:
+        Value: /odom
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.45
+      Color: 160; 160; 160
+      Color Transformer: FlatColor
+      Enabled: true
+      Name: Garage Structure Cloud
+      Size (m): 0.02
+      Style: Points
+      Topic:
+        Value: /exploration/garage_structure_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.25
+      Color: 120; 120; 120
+      Color Transformer: FlatColor
+      Enabled: true
+      Name: Observed All Voxel Centers
+      Size (m): 0.04
+      Style: Points
+      Topic:
+        Value: /exploration/observed_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.25
+      Color: 60; 160; 230
+      Color Transformer: FlatColor
+      Enabled: true
+      Name: Observed Free Voxel Centers
+      Size (m): 0.035
+      Style: Points
+      Topic:
+        Value: /exploration/free_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.85
+      Color: 220; 60; 45
+      Color Transformer: FlatColor
+      Enabled: true
+      Name: Observed Occupied Voxel Centers
+      Size (m): 0.05
+      Style: Points
+      Topic:
+        Value: /exploration/occupied_cloud
+    - Class: rviz_default_plugins/PointCloud2
+      Alpha: 0.85
+      Color: 230; 190; 40
+      Color Transformer: FlatColor
+      Enabled: true
+      Name: Frontier Voxel Centers
+      Size (m): 0.05
+      Style: Points
+      Topic:
+        Value: /exploration/frontier_cloud
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Voxel Cube Markers
+      Topic:
+        Value: /exploration/map_markers
+    - Class: rviz_default_plugins/Path
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.02
+      Name: UAV Trajectory
+      Topic:
+        Value: /exploration/trajectory_path
+    - Class: rviz_default_plugins/Path
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.025
+      Name: Planned Path
+      Topic:
+        Value: /aerial_exploration/path
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Current Goal
+      Topic:
+        Value: /aerial_exploration/selected_goal_marker
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Coverage Text
+      Topic:
+        Value: /exploration/coverage_text
+  Enabled: true
+  Global Options:
+    Background Color: 0; 0; 0
+    Fixed Frame: map
+  Name: root
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 38
+      Pitch: 0.82
+      Target Frame: map
+      Yaw: 0.72
+Window Geometry:
+  Height: 900
+  Width: 1400

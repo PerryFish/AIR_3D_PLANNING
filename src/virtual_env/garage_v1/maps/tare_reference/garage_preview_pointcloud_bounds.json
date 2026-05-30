@@ -1,0 +1,39 @@
+{
+  "bounds": {
+    "x_max": 63.8773359375,
+    "x_min": -63.87185153198242,
+    "y_max": 71.37949145507812,
+    "y_min": -71.37871395874024,
+    "z_max": 20.97284893798828,
+    "z_min": -0.03709299755096436
+  },
+  "copied_original": "/home/nuaa/ZHY/AIR_3D_PLANNING_CLEAN/src/virtual_env/garage_v1/maps/tare_reference/garage_preview_pointcloud_original.ply",
+  "downsampled_pcd": "/home/nuaa/ZHY/AIR_3D_PLANNING_CLEAN/src/virtual_env/garage_v1/maps/tare_reference/garage_preview_pointcloud_downsampled.pcd",
+  "downsampled_xyz": "/home/nuaa/ZHY/AIR_3D_PLANNING_CLEAN/src/virtual_env/garage_v1/maps/tare_reference/garage_preview_pointcloud_downsampled.xyz",
+  "frame_id": "map",
+  "point_count": 121525,
+  "raw_bounds": {
+    "max": [
+      87.70039367675781,
+      117.4015884399414,
+      20.90260887145996
+    ],
+    "min": [
+      -40.18037796020508,
+      -25.367055892944336,
+      -0.11186300218105316
+    ]
+  },
+  "sample_stride": 38,
+  "source": "/home/nuaa/ZHY/TARE_V1/src/autonomous_exploration_development_environment/src/vehicle_simulator/mesh/garage/preview/pointcloud.ply",
+  "source_vertex_count": 4617947,
+  "transform": {
+    "pitch": 0.0,
+    "roll": 0.0,
+    "scale": 1.0,
+    "x": -23.817,
+    "y": -46.018,
+    "yaw": 0.0,
+    "z": 0.073
+  }
+}

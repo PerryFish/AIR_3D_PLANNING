@@ -1,6 +1,8 @@
 build/
 install/
 log/
+logs/ros/
+logs/gazebo_home/
 *.pyc
 __pycache__/
 .bag/
@@ -14,3 +16,4 @@ __pycache__/
 .cache/
 colcon_build.rc
 *.log
+src/virtual_env/garage_v1/maps/tare_reference/garage_preview_pointcloud_original.ply

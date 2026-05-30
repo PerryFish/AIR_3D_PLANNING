@@ -1,0 +1,43 @@
+{
+  "cell_edge_ratio": 0.31368509404448514,
+  "edge_bounds": {
+    "x_max": 63.84917202758789,
+    "x_min": -63.855793563842774,
+    "y_max": 71.3302937282986,
+    "y_min": -71.33687197494508,
+    "z_max": 4.999910877227784,
+    "z_min": -0.03829900068044663
+  },
+  "edge_cells": 41110,
+  "edge_density_ratio": 0.008902224300105652,
+  "edge_point_count": 41110,
+  "filtered_z_max": 5.0,
+  "filtered_z_min": -0.2,
+  "frame_id": "map",
+  "method": "z-sliced XY occupancy boundary from TARE preview pointcloud",
+  "occupied_cells": 131055,
+  "outputs": {
+    "pcd": "/home/nuaa/ZHY/AIR_3D_PLANNING_CLEAN/src/virtual_env/garage_v1/maps/tare_reference/garage_edge_cloud.pcd",
+    "xyz": "/home/nuaa/ZHY/AIR_3D_PLANNING_CLEAN/src/virtual_env/garage_v1/maps/tare_reference/garage_edge_cloud.xyz"
+  },
+  "source": "/home/nuaa/ZHY/TARE_V1/src/autonomous_exploration_development_environment/src/vehicle_simulator/mesh/garage/preview/pointcloud.ply",
+  "surface_bounds": {
+    "x_max": 63.88339367675781,
+    "x_min": -63.99737796020508,
+    "y_max": 71.3835884399414,
+    "y_min": -71.38505589294434,
+    "z_max": 20.97560887145996,
+    "z_min": -0.038863002181053166
+  },
+  "surface_point_count": 4617947,
+  "transform": {
+    "pitch": 0.0,
+    "roll": 0.0,
+    "x": -23.817,
+    "y": -46.018,
+    "yaw": 0.0,
+    "z": 0.073
+  },
+  "xy_resolution": 0.45,
+  "z_resolution": 0.45
+}

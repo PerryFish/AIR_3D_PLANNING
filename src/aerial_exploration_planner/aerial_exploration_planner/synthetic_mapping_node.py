@@ -17,6 +17,8 @@ class SyntheticMappingNode(Node):
         self.declare_parameter("grid.y_cells", 20)
         self.declare_parameter("grid.z_cells", 6)
         self.declare_parameter("grid.resolution", 1.0)
+        self.declare_parameter("grid.origin_x", 0.0)
+        self.declare_parameter("grid.origin_y", 0.0)
         self.declare_parameter("dense50.ground_footprint_occupancy_ratio", 0.50)
         self.declare_parameter("mapping.publish_period_sec", 0.25)
         self.declare_parameter("mapping.sensor_range", 3.2)
@@ -26,6 +28,8 @@ class SyntheticMappingNode(Node):
             int(self.get_parameter("grid.z_cells").value),
             float(self.get_parameter("grid.resolution").value),
             float(self.get_parameter("dense50.ground_footprint_occupancy_ratio").value),
+            float(self.get_parameter("grid.origin_x").value),
+            float(self.get_parameter("grid.origin_y").value),
         )
         self.ground_occupied = make_dense50_ground_footprint(self.spec)
         self.occupied_voxels = ground_to_occupied_voxels(self.spec, self.ground_occupied)

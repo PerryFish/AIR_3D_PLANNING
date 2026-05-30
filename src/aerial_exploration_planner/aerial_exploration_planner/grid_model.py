@@ -8,6 +8,8 @@ class GridSpec:
     z_cells: int
     resolution: float
     target_ground_ratio: float
+    origin_x: float = 0.0
+    origin_y: float = 0.0
 
     @property
     def total_voxels(self):
@@ -58,6 +60,43 @@ def make_dense50_ground_footprint(spec):
     return occupied
 
 
+def make_garage_v1_ground_footprint(spec):
+    occupied = set()
+    wall = 1
+    for ix in range(spec.x_cells):
+        for iy in range(spec.y_cells):
+            if ix < wall or iy < wall or ix >= spec.x_cells - wall or iy >= spec.y_cells - wall:
+                occupied.add((ix, iy))
+    for ix in range(4, spec.x_cells - 4):
+        if ix % 7 in (0, 1):
+            for iy in range(3, spec.y_cells - 3):
+                if iy % 8 not in (3, 4):
+                    occupied.add((ix, iy))
+    for iy in range(6, spec.y_cells - 6, 8):
+        for ix in range(5, spec.x_cells - 5):
+            if ix % 10 not in (4, 5, 6):
+                occupied.add((ix, iy))
+    start_keepout = {
+        (1, 1),
+        (2, 1),
+        (1, 2),
+        (2, 2),
+        (3, 2),
+        (2, 3),
+        (spec.x_cells - 2, spec.y_cells - 2),
+        (spec.x_cells - 3, spec.y_cells - 2),
+        (spec.x_cells - 2, spec.y_cells - 3),
+    }
+    occupied.difference_update(start_keepout)
+    return occupied
+
+
+def make_ground_footprint(spec, environment_model="dense50"):
+    if str(environment_model).lower() in ("garage_v1", "garage"):
+        return make_garage_v1_ground_footprint(spec)
+    return make_dense50_ground_footprint(spec)
+
+
 def ground_to_occupied_voxels(spec, ground_cells):
     occupied = set()
     for ix, iy in ground_cells:
@@ -71,16 +110,16 @@ def ground_to_occupied_voxels(spec, ground_cells):
 
 def grid_to_world(spec, idx):
     return (
-        (idx[0] - spec.x_cells / 2) * spec.resolution + spec.resolution * 0.5,
-        (idx[1] - spec.y_cells / 2) * spec.resolution + spec.resolution * 0.5,
+        spec.origin_x + (idx[0] - spec.x_cells / 2) * spec.resolution + spec.resolution * 0.5,
+        spec.origin_y + (idx[1] - spec.y_cells / 2) * spec.resolution + spec.resolution * 0.5,
         idx[2] * spec.resolution + spec.resolution * 0.5,
     )
 
 
 def world_to_grid(spec, xyz):
     return (
-        int(xyz[0] / spec.resolution + spec.x_cells / 2),
-        int(xyz[1] / spec.resolution + spec.y_cells / 2),
+        int((xyz[0] - spec.origin_x) / spec.resolution + spec.x_cells / 2),
+        int((xyz[1] - spec.origin_y) / spec.resolution + spec.y_cells / 2),
         int(xyz[2] / spec.resolution),
     )
 

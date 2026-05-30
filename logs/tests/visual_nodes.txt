@@ -1,8 +1,0 @@
-/aerial_exploration_node
-/exploration_metrics_node
-/gazebo
-/gazebo_trail_visualizer
-/gazebo_uav_visualizer
-/mode_manager_node
-/sensor_mapping_node
-/simple_uav_follower_node

@@ -20,6 +20,7 @@ class ExplorationMetricsNode(Node):
         self.csv_path = FilesystemPath(self.get_parameter("metrics.csv_path").value)
         self.csv_path.parent.mkdir(parents=True, exist_ok=True)
         self.map_state = {}
+        self.planner_state = {}
         self.pose = (0.0, 0.0, 0.0)
         self.last_pose = None
         self.goal = (0.0, 0.0, 0.0)
@@ -32,6 +33,7 @@ class ExplorationMetricsNode(Node):
         self.done_pub = self.create_publisher(Bool, "/aerial_exploration/done", 10)
         self.coverage_pub = self.create_publisher(Float32, "/aerial_exploration/coverage_metrics", 10)
         self.create_subscription(String, "/aerial_exploration/map_state", self.map_cb, 10)
+        self.create_subscription(String, "/aerial_exploration/planner_state", self.planner_state_cb, 10)
         self.create_subscription(Odometry, "/odom", self.odom_cb, 10)
         self.create_subscription(PoseStamped, "/aerial_exploration/goal", self.goal_cb, 10)
         self.create_subscription(NavPath, "/aerial_exploration/path", self.path_cb, 10)
@@ -57,6 +59,20 @@ class ExplorationMetricsNode(Node):
             "target_ground_footprint_occupancy_ratio",
             "failed_goals",
             "stuck_events",
+            "backtrack_events",
+            "frontier_goals",
+            "goal_source",
+            "frontier_cluster_id",
+            "branch_point_count",
+            "dead_end_count",
+            "backtrack_count",
+            "returned_to_branch_count",
+            "current_region",
+            "start_pose_x",
+            "start_pose_y",
+            "start_pose_z",
+            "start_pose_yaw",
+            "distance_from_start",
             "max_no_progress_duration",
             "robot_x",
             "robot_y",
@@ -79,6 +95,9 @@ class ExplorationMetricsNode(Node):
 
     def map_cb(self, msg):
         self.map_state = json.loads(msg.data)
+
+    def planner_state_cb(self, msg):
+        self.planner_state = json.loads(msg.data)
 
     def odom_cb(self, msg):
         p = msg.pose.pose.position
@@ -121,8 +140,22 @@ class ExplorationMetricsNode(Node):
             "ground_occupied_footprint_cells": int(self.map_state.get("ground_occupied_footprint_cells", 0)),
             "ground_footprint_occupancy_ratio": f"{float(self.map_state.get('ground_footprint_occupancy_ratio', 0.0)):.6f}",
             "target_ground_footprint_occupancy_ratio": f"{float(self.map_state.get('target_ground_footprint_occupancy_ratio', 0.0)):.6f}",
-            "failed_goals": self.failed_goals,
-            "stuck_events": self.stuck_events,
+            "failed_goals": int(self.planner_state.get("failed_goals", self.failed_goals)),
+            "stuck_events": int(self.planner_state.get("stuck_events", self.stuck_events)),
+            "backtrack_events": int(self.planner_state.get("backtrack_events", 0)),
+            "frontier_goals": int(self.planner_state.get("frontier_goals", 0)),
+            "goal_source": self.planner_state.get("goal_source", "unknown"),
+            "frontier_cluster_id": int(self.planner_state.get("frontier_cluster_id", -1)),
+            "branch_point_count": int(self.planner_state.get("branch_point_count", self.planner_state.get("branch_points", 0))),
+            "dead_end_count": int(self.planner_state.get("dead_end_count", 0)),
+            "backtrack_count": int(self.planner_state.get("backtrack_count", self.planner_state.get("backtrack_events", 0))),
+            "returned_to_branch_count": int(self.planner_state.get("returned_to_branch_count", 0)),
+            "current_region": self.planner_state.get("current_region", "unknown"),
+            "start_pose_x": f"{float(self.planner_state.get('start_pose_x', 0.0)):.3f}",
+            "start_pose_y": f"{float(self.planner_state.get('start_pose_y', 0.0)):.3f}",
+            "start_pose_z": f"{float(self.planner_state.get('start_pose_z', 0.0)):.3f}",
+            "start_pose_yaw": f"{float(self.planner_state.get('start_pose_yaw', 0.0)):.3f}",
+            "distance_from_start": f"{float(self.planner_state.get('distance_from_start', 0.0)):.3f}",
             "max_no_progress_duration": f"{self.max_no_progress_duration:.3f}",
             "robot_x": f"{self.pose[0]:.3f}",
             "robot_y": f"{self.pose[1]:.3f}",
