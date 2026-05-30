@@ -23,10 +23,10 @@ That prevented creating `.git/index.lock`, so `git add`, `git commit`, and `git 
 - fallback writable clone path: `/tmp/AIR_3D_PLANNING_BACKUP_WRITABLE_LOCAL_20260530-2032`
 - fallback method: copied the current worktree and readable `.git` from `AIR_3D_PLANNING_CLEAN` into `/tmp`, excluding build/install/log/logs
 - branch: `backup/garage-start-pose-aligned-tare-edge`
-- commit: `PENDING`
-- pushed: `PENDING`
-- tag: `PENDING`
-- tag pushed: `PENDING`
+- commit: `ddd561c6c5266665da5d12a3419fb8a5b02dc9df`
+- pushed: `yes`
+- tag: `v0.6.0-garage-start-pose-aligned`
+- tag pushed: `yes`
 
 ## Reuse
 
